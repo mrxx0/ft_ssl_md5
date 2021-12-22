@@ -22,7 +22,7 @@ end=$ \033[0m
 
 #-----------------------------------------SRC/INC-------------------------------#
 
-FT_SSL_FILES 	= 	main
+FT_SSL_FILES 	= 	main parsing lib
 
 INC_FILES 	= ft_ssl.h
 
