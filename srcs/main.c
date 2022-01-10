@@ -4,8 +4,9 @@ int main(int argc, char **argv)
 {
 	if (argc >= 2)
 	{
-		parsing(argv);
+		if (parsing(argv) == FALSE)
+			return (FALSE);
+		return (TRUE);
 	}
-	(void)argv;
 	return (1);
 }
