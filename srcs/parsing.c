@@ -18,6 +18,7 @@ bool parse_command(char **argv)
         // save
         return TRUE;
     }
+    handle_errors(COMMAND_ERR, *argv);
     printf("Command %s is not valid\n", *argv);
     return FALSE;
 }
@@ -52,7 +53,7 @@ bool parse_flags(char **argv)
             {
                 if (check_flag(argv[i][j]) == FALSE)
                 {
-                    printf("Flags are KO : exiting\n");
+                    handle_errors(FLAG_ERR, argv[i]);
                     return (FALSE);
                 }
                 else
@@ -67,7 +68,7 @@ bool parse_flags(char **argv)
         {
             if (check_flag(argv[i][1]) == FALSE)
             {
-                printf("Flag [%c] is KO : exiting\n", argv[i][1]);
+                handle_errors(FLAG_ERR, argv[i]);
                 return (FALSE);
             }
             else
@@ -94,10 +95,8 @@ bool parse_flags(char **argv)
 bool parsing(char **argv)
 {
     if (parse_command(++argv) == FALSE)
-    {
         return FALSE;
-        //Handling errors with id code
-    }
-    parse_flags(argv);
+    if (parse_flags(argv) == FALSE)
+        return (FALSE);
     return TRUE;
 }

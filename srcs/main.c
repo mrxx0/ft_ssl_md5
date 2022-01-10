@@ -8,5 +8,6 @@ int main(int argc, char **argv)
 			return (FALSE);
 		return (TRUE);
 	}
+	handle_errors(USAGE, NULL);
 	return (1);
 }
