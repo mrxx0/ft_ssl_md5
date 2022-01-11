@@ -11,6 +11,12 @@
 #define FLAG_ERR 2
 #define USAGE 3
 
+# define FLAG_P		1
+# define FLAG_Q		2
+# define FLAG_R		4
+# define FLAG_S		8
+# define NO_FLAG	16
+
 
 
 bool parsing(char **argv);
