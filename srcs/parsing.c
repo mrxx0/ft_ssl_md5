@@ -41,31 +41,22 @@ bool check_flag(char c)
         return (TRUE);
 }
 
+/* ./ft_ssl COMMAND -X file
+Si - tout seul -> erreur
+Si -X OK mais derriere mauvais flag -> erreur
+*/
+
 bool parse_flags(char **argv)
 {
     int i = 1;
-    while (argv[i])
+    while (argv[i][0] == '-')
     {
-        if (ft_strlen(argv[i]) > 2)
-        {
-            int j = 1;
-            while (argv[i][j])
+        printf("argv[i] = %s\n", argv[i]);
+            if (ft_strlen(argv[i]) > 2)
             {
-                if (check_flag(argv[i][j]) == FALSE)
-                {
-                    handle_errors(FLAG_ERR, argv[i]);
-                    return (FALSE);
-                }
-                else
-                {
-                    printf("Flags are OK : stocking\n");
-                    // save the flag
-                }
-                j++;
+                handle_errors(FLAG_ERR, argv[i]);
+                return (FALSE);
             }
-        }
-        else
-        {
             if (check_flag(argv[i][1]) == FALSE)
             {
                 handle_errors(FLAG_ERR, argv[i]);
@@ -73,11 +64,16 @@ bool parse_flags(char **argv)
             }
             else
             {
-                printf("Flag is OK : stocking\n");
+                printf("Flags are OK : stocking\n");
+                // check if 
                 // save the flag
             }
-        }
         i++;
+    }
+    if (i == 1)
+    {
+        // save NO FLAG
+        printf("%s\n", "NO FLAG");
     }
     return TRUE;
 }
