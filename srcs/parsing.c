@@ -41,9 +41,10 @@ bool check_flag(char c)
         return (TRUE);
 }
 
-/* ./ft_ssl COMMAND -X file
-Si - tout seul -> erreur
-Si -X OK mais derriere mauvais flag -> erreur
+/* 
+    ./ft_ssl COMMAND -X file
+    If - alone -> error
+    If -X OK but if wrong flag -> error
 */
 
 bool parse_flags(char **argv)
