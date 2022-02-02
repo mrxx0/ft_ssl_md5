@@ -8,18 +8,18 @@
 
 bool parse_command(char **argv)
 {
-    if (ft_strcmp(*argv, "md5") == 0)
+    if (ft_strcmp(argv[1], "md5") == 0)
     {
         // save
         return TRUE;
     }
-    else if (ft_strcmp(*argv, "sha256") == 0)
+    else if (ft_strcmp(argv[1], "sha256") == 0)
     {
         // save
         return TRUE;
     }
-    handle_errors(COMMAND_ERR, *argv);
-    printf("Command %s is not valid\n", *argv);
+    handle_errors(COMMAND_ERR, argv[1]);
+    printf("Command %s is not valid\n", argv[1]);
     return FALSE;
 }
 
@@ -48,8 +48,8 @@ Si -X OK mais derriere mauvais flag -> erreur
 
 bool parse_flags(char **argv)
 {
-    int i = 1;
-    while (argv[i][0] == '-')
+    int i = 2;
+    while (argv[i] && argv[i][0] == '-')
     {
         printf("argv[i] = %s\n", argv[i]);
             if (ft_strlen(argv[i]) > 2)
@@ -90,7 +90,7 @@ bool parse_flags(char **argv)
 
 bool parsing(char **argv)
 {
-    if (parse_command(++argv) == FALSE)
+    if (parse_command(argv) == FALSE)
         return FALSE;
     if (parse_flags(argv) == FALSE)
         return (FALSE);
