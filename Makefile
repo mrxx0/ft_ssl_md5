@@ -7,7 +7,7 @@ CFLAGS += -Werror
 CFLAGS += -g3 
 CFLAGS += -fsanitize=address
 CFLAGS += -Wpadded
-#-------------------------------------COLOR VARIABLE----------------------------#
+#-------------------------------------COLOR VARIABLE---------------------------#
 
 red_li=$ \033[1;31m
 red_da=$ \033[0;31m
@@ -20,13 +20,13 @@ cyn=$ \033[1;36m
 whi=$ \033[1;37m
 end=$ \033[0m
 
-#-----------------------------------------SRC/INC-------------------------------#
+#-----------------------------------------SRC/INC------------------------------#
 
-FT_SSL_FILES 	= 	main parsing lib handle_errors
+FT_SSL_FILES 	= 	main parsing lib handle_errors init
 
 INC_FILES 	= ft_ssl.h
 
-#---------------------------------------PATH/FILES-------------------------------#
+#--------------------------------------PATH/FILES------------------------------#
 
 SRC_PATH = ./srcs/
 INC_PATH = ./includes/
@@ -38,7 +38,7 @@ OBJ_FILES = $(SRC_FILES:.c=.o)
 INC = $(addprefix $(INC_PATH), $(INC_FILES))
 OBJ = $(patsubst %.c, $(OBJ_PATH)%.o, $(SRC_FILES))
 
-#------------------------------------------RULES--------------------------------#
+#-----------------------------------------RULES--------------------------------#
 
 .PHONY: clean, fclean, all, re
 
