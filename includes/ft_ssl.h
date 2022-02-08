@@ -16,6 +16,7 @@
 # define FLAG_ERR 2
 # define USAGE 3
 # define MALLOC_FAILED 4
+# define REPETED_FLAG 5
 
 /*      FLAGS CODE     */
 
@@ -25,19 +26,25 @@
 # define FLAG_S		8
 # define NO_FLAG	16
 
+/*      CMD CODE       */
+
+# define MD5    1
+# define SHA256 2
+
 typedef struct				s_ssl
 {
 	char					*input;
 	char					*output;
 	size_t					input_size;
+    int                     cmd;
 	int						error;
 	int                     flag;
+    char                    pad[4];
 }							t_ssl;
 
-bool parsing(char **argv);
+bool parsing(char **argv, t_ssl	*ssl);
 void handle_errors(int error_id, char *error);
 t_ssl   *init_new_ssl(void);
-
 
 /*          LIBFT       */
 int		ft_strcmp(const char *s1, const char *s2);
