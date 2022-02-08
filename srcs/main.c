@@ -35,6 +35,7 @@ int main(int argc, char **argv)
 			free(ssl);
 			return (FALSE);
 		}
+		executing_from(argv, ssl);
 		print_info_ssl(ssl);
 		free(ssl);
 		return (TRUE);

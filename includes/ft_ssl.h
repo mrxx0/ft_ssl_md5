@@ -45,6 +45,7 @@ typedef struct				s_ssl
 bool parsing(char **argv, t_ssl	*ssl);
 void handle_errors(int error_id, char *error);
 t_ssl   *init_new_ssl(void);
+void execution_from(char **argv, t_ssl *ssl);
 
 /*          LIBFT       */
 int		ft_strcmp(const char *s1, const char *s2);
