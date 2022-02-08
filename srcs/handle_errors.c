@@ -1,5 +1,8 @@
 #include "../includes/ft_ssl.h"
 
+/*  
+    Handling errors with specific id code.
+*/
 
 void handle_errors(int error_id, char *error)
 {
@@ -28,5 +31,9 @@ void handle_errors(int error_id, char *error)
     if (error_id == MALLOC_FAILED)
     {
         printf("%s", "ft_ssl : Error : Failed to allocate memory.\n");
+    }
+    if (error_id == REPETED_FLAG)
+    {
+        printf("ft_ssl: Error: flag '%s' is already set.\n", error);
     }
 }
