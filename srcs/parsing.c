@@ -11,16 +11,16 @@ bool parse_command(char **argv)
     if (ft_strcmp(argv[1], "md5") == 0)
     {
         // save
-        return TRUE;
+        return (TRUE);
     }
     else if (ft_strcmp(argv[1], "sha256") == 0)
     {
         // save
-        return TRUE;
+        return (TRUE);
     }
     handle_errors(COMMAND_ERR, argv[1]);
     printf("Command %s is not valid\n", argv[1]);
-    return FALSE;
+    return (FALSE);
 }
 
 /*
@@ -76,7 +76,7 @@ bool parse_flags(char **argv)
         // save NO FLAG
         printf("%s\n", "NO FLAG");
     }
-    return TRUE;
+    return (TRUE);
 }
 
 /*
@@ -92,8 +92,8 @@ bool parse_flags(char **argv)
 bool parsing(char **argv)
 {
     if (parse_command(argv) == FALSE)
-        return FALSE;
+        return (FALSE);
     if (parse_flags(argv) == FALSE)
         return (FALSE);
-    return TRUE;
+    return (TRUE);
 }
