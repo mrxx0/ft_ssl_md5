@@ -23,6 +23,10 @@ void handle_errors(int error_id, char *error)
     }
     if (error_id == USAGE)
     {
-        printf("usage: ft_ssl command [flags] [file/string]\n");
+        printf("%s", "usage: ft_ssl command [flags] [file/string]\n");
+    }
+    if (error_id == MALLOC_FAILED)
+    {
+        printf("%s", "ft_ssl : Error : Failed to allocate memory.\n");
     }
 }
