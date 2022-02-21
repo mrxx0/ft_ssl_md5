@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 /*      BOOLEAN        */
 
@@ -42,13 +44,17 @@ typedef struct				s_ssl
     char                    pad[4];
 }							t_ssl;
 
-bool parsing(char **argv, t_ssl	*ssl);
-void handle_errors(int error_id, char *error);
-t_ssl   *init_new_ssl(void);
-void execution_from(char **argv, t_ssl *ssl);
+bool 	parsing(char **argv, int *argc, t_ssl *ssl);
+void 	handle_errors(int error_id, char *error);
+t_ssl 	*init_new_ssl(void);
+bool 	read_input(char **argv, int *argc, t_ssl *ssl);
 
 /*          LIBFT       */
 int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_strlen(const char *s);
 void	*ft_memalloc(size_t size);
+void	ft_bzero(void *s, size_t n);
+void	ft_strdel(char **as);
+char	*ft_strdup(const char *s1);
+char		*strnjoins(char *s1, char *s2, size_t len1, size_t len2);
 #endif
