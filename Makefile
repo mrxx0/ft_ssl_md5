@@ -22,7 +22,7 @@ end=$ \033[0m
 
 #-----------------------------------------SRC/INC------------------------------#
 
-FT_SSL_FILES 	= 	main parsing lib handle_errors init
+FT_SSL_FILES 	= 	main parsing lib handle_errors init read_input
 
 INC_FILES 	= ft_ssl.h
 
