@@ -81,7 +81,7 @@ bool stock_flag(char c, t_ssl *ssl)
     If -X OK but if wrong flag -> error
 */
 
-bool parse_flags(char **argv, t_ssl	*ssl)
+bool parse_flags(char **argv, int *argc, t_ssl	*ssl)
 {
     int i = 2;
     while (argv[i] && argv[i][0] == '-')
@@ -108,11 +108,15 @@ bool parse_flags(char **argv, t_ssl	*ssl)
             }
         i++;
     }
-    if (i == 1)
+    if (i == 2)
     {
         ssl->flag |= NO_FLAG;
         printf("%s\n", "NO FLAG");
     }
+    printf("argc = %d\n", *argc);
+    *argc -= i;
+    printf("argc = %d\n", *argc);
+
     return (TRUE);
 }
 
@@ -126,11 +130,11 @@ bool parse_flags(char **argv, t_ssl	*ssl)
                 -s, print the sum of the given string
 */
 
-bool parsing(char **argv, t_ssl	*ssl)
+bool parsing(char **argv, int *argc, t_ssl	*ssl)
 {
     if (parse_command(argv, ssl) == FALSE)
         return (FALSE);
-    if (parse_flags(argv, ssl) == FALSE)
+    if (parse_flags(argv, argc, ssl) == FALSE)
         return (FALSE);
     return (TRUE);
 }

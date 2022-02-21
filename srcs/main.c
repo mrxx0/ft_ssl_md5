@@ -30,13 +30,15 @@ int main(int argc, char **argv)
 	{
 	    t_ssl	*ssl;
 		ssl = init_new_ssl();
-		if (parsing(argv, ssl) == FALSE)
+		if (parsing(argv, &argc, ssl) == FALSE)
 		{
 			free(ssl);
 			return (FALSE);
 		}
-		executing_from(argv, ssl);
+		read_input(argv, &argc, ssl);
 		print_info_ssl(ssl);
+		if (ssl->input)
+			free(ssl->input);
 		free(ssl);
 		return (TRUE);
 	}
