@@ -36,26 +36,61 @@ void         read_input_stdin(t_ssl *ssl)
 }
 
 /*
+    Returns the fd index to open the input.
+*/
+
+int open_input(t_ssl *ssl, char *input)
+{
+    int fd;
+    struct stat buf;
+
+    (void)ssl;
+
+    if ((fd = open(input, O_RDONLY)) == -1)
+        printf("%s\n", "FAIL OPEN");
+    if (fstat(fd, &buf) == 0 && S_ISDIR(buf.st_mode))
+        printf("%s\n", "FAIL OPEN");
+    return (fd);
+}
+
+/*
     Reads input from string/file
 */
 
-void         read_input_file_string()
+void         read_input_file_string(t_ssl *ssl, char *input)
 {
-    printf("reading from file string\n");
+    int fd;
+    // char *buffer;
+    // ssize_t read_return;
+    // u_int64_t buffer_size;
+
+    fd = open_input(ssl, input);
+    printf("reading from file string on fd = %d: %s\n", fd, input);
     return ;
 }
+
 /*
     Dispatch reading method from stdin or string/file
 */
 
 bool read_input(char **argv, int *argc, t_ssl *ssl)
 {
-    if ((ssl->flag & FLAG_P) != 0)
-        read_input_stdin(ssl);
-    else if (*argc == 0)
-        read_input_stdin(ssl);
-    else
-        read_input_file_string();
+    int i = 2;
+    // loop to iterate on sting and -s flag
+    while (i <= *argc)
+    {
+        if ((ssl->flag & FLAG_P) != 0)
+            read_input_stdin(ssl);
+        else if (*argc == 0)
+            read_input_stdin(ssl);
+        else
+            read_input_file_string(ssl, argv[i]);
+        
+        // Dispatch to hash algorithm
+        // Clear SSL input/input_size//output
+        i++;
+    }
+    
     (void)argv;
     return (TRUE);
 }
