@@ -83,7 +83,8 @@ bool stock_flag(char c, t_ssl *ssl)
 
 bool parse_flags(char **argv, int *argc, t_ssl	*ssl)
 {
-    int i = 1;
+    (void)argc;
+    int i = 2;
     while (argv[i] && argv[i][0] == '-')
     {
         printf("argv[i] = %s\n", argv[i]);
@@ -108,15 +109,12 @@ bool parse_flags(char **argv, int *argc, t_ssl	*ssl)
             }
         i++;
     }
-    if (i == 1)
+    if (i == 2)
     {
         ssl->flag |= NO_FLAG;
         printf("%s\n", "NO FLAG");
     }
-    printf("argc = %d\n", *argc);
-    *argc -= i;
-    printf("argc = %d\n", *argc);
-
+    ssl->offset = i;
     return (TRUE);
 }
 
