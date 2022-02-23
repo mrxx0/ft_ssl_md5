@@ -41,7 +41,7 @@ typedef struct				s_ssl
 	char					*output;
 	size_t					input_size;
     int                     cmd;
-	int						error;
+	int 					offset;
 	int                     flag;
     char                    pad[4];
 }							t_ssl;
@@ -49,6 +49,7 @@ typedef struct				s_ssl
 bool 	parsing(char **argv, int *argc, t_ssl *ssl);
 void 	handle_errors(int error_id, char *error);
 t_ssl 	*init_new_ssl(void);
+void    clear_ssl(t_ssl *ssl);
 bool 	read_input(char **argv, int *argc, t_ssl *ssl);
 
 /*          LIBFT       */
