@@ -8,6 +8,8 @@
 
 void        read_input_string(char **argv, int i, t_ssl *ssl)
 {
+    if (!argv[i])
+        handle_errors(MISSING_ARG, NULL);
     ssl->input = ft_strdup(argv[i]);
     ssl->input_size = ft_strlen(ssl->input);
 }
