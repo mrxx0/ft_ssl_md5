@@ -22,6 +22,7 @@
 # define MALLOC_FAILED 4
 # define REPETED_FLAG 5
 # define INVALID_FILE_DIRECTORY 6
+# define MISSING_ARG 7
 
 /*      FLAGS CODE     */
 
