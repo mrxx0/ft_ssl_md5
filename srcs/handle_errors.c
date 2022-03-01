@@ -36,4 +36,9 @@ void handle_errors(int error_id, char *error)
     {
         printf("ft_ssl: Error: flag '%s' is already set.\n", error);
     }
+    if (error_id == INVALID_FILE_DIRECTORY)
+    {
+        printf("ft_ssl: %s: No such file or directory\n", error);
+    }
+    exit(EXIT_FAILURE);
 }
