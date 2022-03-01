@@ -20,7 +20,6 @@ bool parse_command(char **argv, t_ssl *ssl)
     }
     ssl->cmd = 0;
     handle_errors(COMMAND_ERR, argv[1]);
-    printf("Command %s is not valid\n", argv[1]);
     return (FALSE);
 }
 
@@ -81,9 +80,8 @@ bool stock_flag(char c, t_ssl *ssl)
     If -X OK but if wrong flag -> error
 */
 
-bool parse_flags(char **argv, int *argc, t_ssl	*ssl)
+bool parse_flags(char **argv, t_ssl	*ssl)
 {
-    (void)argc;
     int i = 2;
     while (argv[i] && argv[i][0] == '-')
     {
@@ -128,11 +126,11 @@ bool parse_flags(char **argv, int *argc, t_ssl	*ssl)
                 -s, print the sum of the given string
 */
 
-bool parsing(char **argv, int *argc, t_ssl	*ssl)
+bool parsing(char **argv, t_ssl	*ssl)
 {
     if (parse_command(argv, ssl) == FALSE)
         return (FALSE);
-    if (parse_flags(argv, argc, ssl) == FALSE)
+    if (parse_flags(argv, ssl) == FALSE)
         return (FALSE);
     return (TRUE);
 }
