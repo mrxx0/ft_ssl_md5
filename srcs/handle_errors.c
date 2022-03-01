@@ -40,5 +40,9 @@ void handle_errors(int error_id, char *error)
     {
         printf("ft_ssl: %s: No such file or directory\n", error);
     }
+    if (error_id == MISSING_ARG)
+    {
+        printf("ft_ssl: -s flag requires an argument.\n");
+    }
     exit(EXIT_FAILURE);
 }
