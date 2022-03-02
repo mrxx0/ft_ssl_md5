@@ -118,12 +118,14 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
     if ((ssl->flag & FLAG_P) != 0)
     {
         read_input_stdin(ssl);
+        execute(ssl);
         // Dispatch to hash algorithm
         clear_ssl(ssl);
     }
     if ((ssl->flag & FLAG_S) != 0)
     {
         read_input_string(argv, i, ssl);
+        execute(ssl);
         // Dispatch to hash algorithm
         clear_ssl(ssl);
         i++;
@@ -131,12 +133,14 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
     else if (ssl->offset == *argc)
     {
         read_input_stdin(ssl);
+        execute(ssl);
         // Dispatch to hash algorithm
         clear_ssl(ssl);
     }
     while (i < *argc)
     {
         read_input_file(ssl, argv[i]);
+        execute(ssl);
         // Dispatch to hash algorithm
         clear_ssl(ssl);
         i++;
