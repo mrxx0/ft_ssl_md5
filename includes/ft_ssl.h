@@ -34,8 +34,8 @@
 
 /*      CMD CODE       */
 
-# define MD5    1
-# define SHA256 2
+# define MD5    0
+# define SHA256 1
 
 typedef struct				s_ssl
 {
@@ -50,13 +50,12 @@ typedef struct				s_ssl
 
 typedef struct				s_md5
 {
-	char					*input;
-	char					*output;
-	size_t					input_size;
-    int                     cmd;
-	int 					offset;
-	int                     flag;
-    char                    pad[4];
+	u_int32_t				A;
+	u_int32_t				B;
+	u_int32_t				C;
+	u_int32_t				D;
+	size_t					dft_size;
+
 }							t_md5;
 
 bool 	parsing(char **argv, t_ssl *ssl);
@@ -64,8 +63,10 @@ void 	handle_errors(int error_id, char *error);
 t_ssl 	*init_new_ssl(void);
 void    clear_ssl(t_ssl *ssl);
 bool 	read_input(char **argv, int *argc, t_ssl *ssl);
-void 	execute(t_ssl *ssl);
-void 	md5 (t_ssl *ssl);
+void 	execute(char *input, size_t input_size, bool cmd);
+void 	md5 (char *input, size_t input_size);
+t_md5   *init_new_md5(size_t input_size);
+void    clear_md5(t_md5 *md5);
 
 /*          LIBFT       */
 

@@ -1,19 +1,27 @@
 #include "../includes/ft_ssl.h"
 
+/*
+    Init md5 structure.
+*/
 
-void    clear_ssl(t_ssl *ssl)
+t_md5   *init_new_md5(size_t input_size)
 {
-    ssl->input_size = 0;
-    if (ssl->input)
-        free(ssl->input);
-    ssl->input = NULL;
-    if (ssl->output)
-        free(ssl->output);
-    ssl->output = NULL;
+    t_md5 *md5;
+
+    md5 = NULL;
+    if (!(md5 = (t_md5 *)ft_memalloc(sizeof(t_md5))))
+        handle_errors(MALLOC_FAILED, NULL);
+    md5->A = 0x67452301;
+    md5->B = 0xEFCDAB89;
+    md5->C = 0x98BADCFE;
+    md5->D = 0x10325476;
+    md5->dft_size = input_size;
+    
+    return (md5);
 }
 
 /*
-    Zeroing ssl structure.
+    Init ssl structure.
 */
 
 t_ssl   *init_new_ssl(void)

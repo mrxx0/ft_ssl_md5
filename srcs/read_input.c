@@ -37,6 +37,7 @@ void         read_input_stdin(t_ssl *ssl)
 		ssl->input_size += read_return;
 		ft_bzero(buffer, 512 + 1);
 	}
+    close(STDIN_FILENO);
 	if (!ssl->input)
 		if (!(ssl->input = ft_strdup("")))
             handle_errors(MALLOC_FAILED, NULL);
@@ -117,30 +118,32 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
     int i = ssl->offset;
     if ((ssl->flag & FLAG_P) != 0)
     {
+        printf("stdin 1\n");
         read_input_stdin(ssl);
-        execute(ssl);
+        execute(ssl->input, ssl->input_size, ssl->cmd);
         // Dispatch to hash algorithm
         clear_ssl(ssl);
     }
     if ((ssl->flag & FLAG_S) != 0)
     {
         read_input_string(argv, i, ssl);
-        execute(ssl);
+        execute(ssl->input, ssl->input_size, ssl->cmd);
         // Dispatch to hash algorithm
         clear_ssl(ssl);
         i++;
     }
-    else if (ssl->offset == *argc)
+    else if (ssl->offset == *argc && (ssl->flag & FLAG_P) == 0)
     {
+        printf("stdin 2\n");
         read_input_stdin(ssl);
-        execute(ssl);
+        execute(ssl->input, ssl->input_size, ssl->cmd);
         // Dispatch to hash algorithm
         clear_ssl(ssl);
     }
     while (i < *argc)
     {
         read_input_file(ssl, argv[i]);
-        execute(ssl);
+        execute(ssl->input, ssl->input_size, ssl->cmd);
         // Dispatch to hash algorithm
         clear_ssl(ssl);
         i++;
