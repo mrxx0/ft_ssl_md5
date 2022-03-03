@@ -22,7 +22,8 @@ end=$ \033[0m
 
 #-----------------------------------------SRC/INC------------------------------#
 
-FT_SSL_FILES 	= 	main parsing lib handle_errors init read_input execute md5
+FT_SSL_FILES 	= 	main parsing lib handle_errors init read_input execute md5 \
+					clear
 
 INC_FILES 	= ft_ssl.h
 
