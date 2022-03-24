@@ -55,6 +55,7 @@ typedef struct				s_md5
 	u_int32_t				C;
 	u_int32_t				D;
 	size_t					dft_size;
+	size_t					pad_size;
 
 }							t_md5;
 
