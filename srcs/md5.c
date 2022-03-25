@@ -10,6 +10,6 @@ void md5 (char *input, size_t input_size)
 
     (void)input;
     printf("Hasing in md5\n");
-    md5 = init_new_md5(input_size);
+    md5 = init_new_md5(input, input_size);
     clear_md5(md5);
 }

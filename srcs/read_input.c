@@ -22,6 +22,7 @@ void        read_input_string(char **argv, int i, t_ssl *ssl)
 
 void         read_input_stdin(t_ssl *ssl)
 {
+    printf("reading stdin\n");
 	char	buffer[512 + 1];
 	char	*stdin;
 	ssize_t	read_return;
@@ -80,6 +81,7 @@ u_int64_t get_input_size(int fd)
 
 void         read_input_file(t_ssl *ssl, char *input)
 {
+    printf("reading %s\n", input);
     int fd;
     char *buffer;
     ssize_t read_return = 0;
