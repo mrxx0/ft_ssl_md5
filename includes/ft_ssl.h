@@ -79,6 +79,8 @@ void 	execute(char *input, size_t input_size, bool cmd);
 void 	md5 (char *input, size_t input_size);
 t_md5   *init_new_md5(char *input, size_t input_size);
 void    clear_md5(t_md5 *md5);
+void 	md5_processing(t_md5 *md5);
+
 
 /*          LIBFT       */
 
