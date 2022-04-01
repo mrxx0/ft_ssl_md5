@@ -44,6 +44,7 @@
 #define H(X, Y, Z) (X ^ Y ^ Z)
 #define I(X, Y, Z) (Y ^ (X | ~Z))
 
+/*      STRUCTURE       */
 
 typedef struct				s_ssl
 {
@@ -67,7 +68,7 @@ typedef struct				s_md5
 
 }							t_md5;
 
-
+/*      PROTOTYPE       */
 
 bool 	parsing(char **argv, t_ssl *ssl);
 void 	handle_errors(int error_id, char *error);
