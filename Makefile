@@ -1,5 +1,5 @@
 NAME = ft_ssl
-CC = clang-9
+CC = gcc
 CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Werror
