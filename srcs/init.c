@@ -19,7 +19,7 @@ void print_md5(t_md5 *md5)
     Append '1' bit to the end of the message and fill as many 0 required.
 */
 
-    char	*prepare_md5_padded_message(char *msg, size_t dft_size, size_t pad_size)
+char	*prepare_md5_padded_message(char *msg, size_t dft_size, size_t pad_size)
 {
     printf("dft_size = %zu\npad_size = %zu\n", dft_size, pad_size);
 	char				*new;
@@ -29,10 +29,10 @@ void print_md5(t_md5 *md5)
 		return (NULL);
 	new = ft_memcpy((void *)new, (void *)msg, dft_size);
 	new[dft_size] = (unsigned char)0b10000000;
-
-    while (cursor < pad_size)
+    while(cursor < pad_size)
+    {
         new[cursor++] = 0;
-
+    }
 	return (new);
 }
 
