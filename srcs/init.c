@@ -29,10 +29,8 @@ char	*prepare_md5_padded_message(char *msg, size_t dft_size, size_t pad_size)
 		return (NULL);
 	new = ft_memcpy((void *)new, (void *)msg, dft_size);
 	new[dft_size] = (unsigned char)0b10000000;
-    while(cursor < pad_size)
-    {
-        new[cursor++] = 0;
-    }
+	while(cursor < pad_size)
+		new[cursor++] = 0;
 	return (new);
 }
 
