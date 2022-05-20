@@ -64,7 +64,7 @@ int open_input(char *input)
     Returns the size / 10 of the file opened.
 */
 
-u_int64_t get_input_size(int fd)
+uint64_t get_input_size(int fd)
 {
     struct stat	buf;
 
@@ -85,7 +85,7 @@ void         read_input_file(t_ssl *ssl, char *input)
     int fd;
     char *buffer;
     ssize_t read_return = 0;
-    u_int64_t buffer_size;
+    uint64_t buffer_size;
 
     fd = open_input(input);
     buffer_size = get_input_size(fd);
