@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdint.h>
 
 /*      BOOLEAN        */
 
@@ -53,10 +54,10 @@ typedef struct				s_ssl
 
 typedef struct				s_md5
 {
-	u_int32_t				A;
-	u_int32_t				B;
-	u_int32_t				C;
-	u_int32_t				D;
+	uint32_t				A;
+	uint32_t				B;
+	uint32_t				C;
+	uint32_t				D;
 	size_t					dft_size;
 	size_t					pad_size;
 
@@ -64,17 +65,17 @@ typedef struct				s_md5
 
 /*      PROTOTYPE       */
 
-bool 	parsing(char **argv, t_ssl *ssl);
-void 	handle_errors(int error_id, char *error);
-t_ssl 	*init_new_ssl(void);
-void    clear_ssl(t_ssl *ssl);
-bool 	read_input(char **argv, int *argc, t_ssl *ssl);
-void 	execute(char *input, size_t input_size, bool cmd);
-void 	md5 (char *input, size_t input_size);
-t_md5   *init_new_md5(size_t input_size);
-void    clear_md5(t_md5 *md5);
-void 	md5_processing(t_md5 *md5, char *input);
-char	*prepare_md5_padded_message(char *msg, size_t dft_size, size_t pad_size);
+bool 			parsing(char **argv, t_ssl *ssl);
+void 			handle_errors(int error_id, char *error);
+t_ssl 			*init_new_ssl(void);
+void    		clear_ssl(t_ssl *ssl);
+bool 			read_input(char **argv, int *argc, t_ssl *ssl);
+void 			execute(char *input, size_t input_size, bool cmd);
+void 			md5 (char *input, size_t input_size);
+t_md5   		*init_new_md5(size_t input_size);
+void   			 clear_md5(t_md5 *md5);
+void 			md5_processing(t_md5 *md5, char *input);
+unsigned char	*prepare_md5_padded_message(char *msg, size_t dft_size, size_t pad_size);
 
 
 /*          LIBFT       */
@@ -87,4 +88,6 @@ void	ft_strdel(char **as);
 char	*ft_strdup(const char *s1);
 char	*strnjoins(char *s1, char *s2, size_t len1, size_t len2);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
+void	*ft_memset(void *b, int c, size_t n);
+
 #endif
