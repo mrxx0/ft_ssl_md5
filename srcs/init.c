@@ -16,26 +16,6 @@ void print_md5(t_md5 *md5)
 }
 
 /*
-    Pad msg string len from dft_size to pad_size (multiple of (512-64) bits).
-    Append '1' bit to the end of the message and fill as many 0 required.
-*/
-
-char	*prepare_md5_padded_message(char *msg, size_t dft_size, size_t pad_size)
-{
-    printf("dft_size = %zu\npad_size = %zu\n", dft_size, pad_size);
-	char				*new;
-    size_t              cursor = dft_size + 1;
-
-	if (!(new = (char *)ft_memalloc((pad_size))))
-		return (NULL);
-	new = ft_memcpy((void *)new, (void *)msg, dft_size);
-	new[dft_size] = (unsigned char)0b10000000;
-	while(cursor < pad_size)
-		new[cursor++] = 0;
-	return (new);
-}
-
-/*
     Init md5 structure.
 */
 
@@ -56,11 +36,6 @@ t_md5   *init_new_md5(size_t input_size)
         else
             md5->pad_size = 128 - md5->dft_size % 64 + md5->dft_size;
     }
-    // char *tmp = prepare_md5_padded_message(input, md5->dft_size, md5->pad_size);
-    // printf("input = [%p]\npaded = [%p]\n", input, tmp);
-    // printf("input size = %zu\n", ft_strlen(input));
-    // print_md5(md5);
-    // free(tmp);
     return (md5);
 }
 
