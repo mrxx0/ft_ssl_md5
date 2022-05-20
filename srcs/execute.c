@@ -6,7 +6,6 @@
 
 void execute(char *input, size_t input_size, bool cmd)
 {
-    printf("\nExecuting...\n");
     if (cmd == MD5)
         md5(input, input_size);
     // else if (ssl->cmd == SHA256)

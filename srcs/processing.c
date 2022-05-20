@@ -140,6 +140,6 @@ void md5_processing(t_md5 *md5, char *input)
 	for (int i = 0; i < 4; i++)
 		sprintf(hash + 24 + i * 2, "%02x", ((uint8_t *)&d0)[i]);
 	hash[32] = '\0';
-	printf("--------------\n\n\n%s\n", hash);
+	printf("MD5 = %s\n", hash);
 	free(hash);
 }

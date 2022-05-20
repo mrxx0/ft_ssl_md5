@@ -85,7 +85,6 @@ bool parse_flags(char **argv, t_ssl	*ssl)
     int i = 2;
     while (argv[i] && argv[i][0] == '-')
     {
-        printf("argv[i] = %s\n", argv[i]);
             if (ft_strlen(argv[i]) > 2)
             {
                 handle_errors(FLAG_ERR, argv[i]);
@@ -103,15 +102,11 @@ bool parse_flags(char **argv, t_ssl	*ssl)
                     handle_errors(5, &argv[i][1]);
                     return (FALSE);
                 }
-                printf("Flags are OK : stocking\n");
             }
         i++;
     }
     if (i == 2)
-    {
         ssl->flag |= NO_FLAG;
-        printf("%s\n", "NO FLAG");
-    }
     ssl->offset = i;
     return (TRUE);
 }

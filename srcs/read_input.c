@@ -22,7 +22,6 @@ void        read_input_string(char **argv, int i, t_ssl *ssl)
 
 void         read_input_stdin(t_ssl *ssl)
 {
-    printf("reading stdin\n");
 	char	buffer[512 + 1];
 	char	*stdin;
 	ssize_t	read_return;
@@ -81,7 +80,6 @@ uint64_t get_input_size(int fd)
 
 void         read_input_file(t_ssl *ssl, char *input)
 {
-    printf("reading %s\n", input);
     int fd;
     char *buffer;
     ssize_t read_return = 0;
@@ -120,7 +118,6 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
     int i = ssl->offset;
     if ((ssl->flag & FLAG_P) != 0)
     {
-        printf("stdin 1\n");
         read_input_stdin(ssl);
         execute(ssl->input, ssl->input_size, ssl->cmd);
         // Dispatch to hash algorithm
@@ -136,7 +133,6 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
     }
     else if (ssl->offset == *argc && (ssl->flag & FLAG_P) == 0)
     {
-        printf("stdin 2\n");
         read_input_stdin(ssl);
         execute(ssl->input, ssl->input_size, ssl->cmd);
         // Dispatch to hash algorithm
