@@ -4,11 +4,11 @@
     Create md5 object with associated values.
 */
 
-void md5 (char *input, size_t input_size)
+void md5 (t_ssl *ssl)
 {
     t_md5 *md5;
 
-    md5 = init_new_md5(input_size);
-    md5_processing(md5, input);
+    md5 = init_new_md5(ssl->input_size);
+    md5_processing(md5, ssl->input);
     clear_md5(md5);
 }

@@ -4,10 +4,10 @@
     Dispatch ssl to desired hash from user.
 */
 
-void execute(char *input, size_t input_size, bool cmd)
+void execute(t_ssl *ssl)
 {
-    if (cmd == MD5)
-        md5(input, input_size);
+    if (ssl->cmd == MD5)
+        md5(ssl);
     // else if (ssl->cmd == SHA256)
     //     sha256(ssl);
 }
