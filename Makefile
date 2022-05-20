@@ -7,18 +7,6 @@ CFLAGS += -Werror
 CFLAGS += -g3 
 CFLAGS += -fsanitize=address
 CFLAGS += -Wpadded
-#-------------------------------------COLOR VARIABLE---------------------------#
-
-red_li=$ \033[1;31m
-red_da=$ \033[0;31m
-grn_li=$ \033[1;32m
-grn_da=$ \033[0;32m
-yel=$ \033[1;33m
-blu=$ \033[1;34m
-mag=$ \033[1;35m
-cyn=$ \033[1;36m
-whi=$ \033[1;37m
-end=$ \033[0m
 
 #-----------------------------------------SRC/INC------------------------------#
 
@@ -50,19 +38,19 @@ $(OBJ_PATH):
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) -c -I $(INC_PATH) $< -o $@
-	@echo "Compilation of $(whi)$(notdir $<)$(grn_da) done.$(end)"
+	@echo "Compilation of $(notdir $<) done."
 
 $(NAME): $(INC) $(OBJ_PATH) $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -lm -I $(INC_PATH)
-	@echo "$(grn_li)$(notdir $(NAME))$(grn_da) created.$(end)"
+	@echo "$(notdir $(NAME)) created."
 
 clean:
 	@$(RM) -R $(OBJ_PATH)
-	@echo "$(red_li)Objects files of $(notdir $(NAME))$(red_da) removed.$(end)"
+	@echo "Objects files of $(notdir $(NAME)) removed."
 
 fclean: clean
 	@$(RM) -R $(NAME)
-	@echo "$(red_li)$(notdir $(NAME))$(red_da) removed.$(end)"
+	@echo "$(notdir $(NAME)) removed."
 
 re: fclean $(NAME)
 
