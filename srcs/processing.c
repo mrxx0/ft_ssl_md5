@@ -4,10 +4,15 @@
 
 /*		CONSTANT MD5		*/
 
-uint32_t a0 = 0x67452301;
-uint32_t b0 = 0xEFCDAB89;
-uint32_t c0 = 0x98BADCFE;
-uint32_t d0 = 0x10325476;
+uint32_t a0 = 0;
+uint32_t b0 = 0;
+uint32_t c0 = 0;
+uint32_t d0 = 0;
+
+#define word_A  0x67452301;
+#define word_B  0xEFCDAB89;
+#define word_C  0x98BADCFE;
+#define word_D  0x10325476;
 
 uint32_t s[64] = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
 	5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
@@ -65,11 +70,10 @@ void md5_constant_loop(t_md5 *md5, unsigned char *input_padded)
 	md5->C = c0;
 	md5->D = d0;
 
-	
 	while (i < 64)
 	{
-		uint32_t f_result;
-		uint32_t g;
+		uint32_t f_result = 0;
+		uint32_t g = 0;
 		if (i < 16)
 		{
 			f_result = F(md5->B, md5->C, md5->D); 
@@ -101,6 +105,17 @@ void md5_constant_loop(t_md5 *md5, unsigned char *input_padded)
 }
 
 /*
+	Reset value for global variable in case of multiple arguments.
+*/
+
+void reset_ABCD()
+{
+	a0 = word_A;
+	b0 = word_B;
+	c0 = word_C;
+	d0 = word_D;
+}
+/*
    This is where the MD5 is created.
    At the end of the new message we happened the 64bit representation of the original size.
    There are md5->pad_size / 64 rounds.
@@ -109,16 +124,17 @@ void md5_constant_loop(t_md5 *md5, unsigned char *input_padded)
    - Update ABCD word
    */
 
-void md5_processing(t_md5 *md5, char *input)
+void md5_processing(t_md5 *md5, t_ssl *ssl)
 {
-	uint64_t i;
+	reset_ABCD();
+	uint64_t i= 0;
 	size_t              pad_zero = 0;
 	unsigned char		*new;
 	unsigned char 		*buf;
 
 	if (!(new = (unsigned char *)malloc(sizeof(char) * md5->pad_size)))
 		handle_errors(MALLOC_FAILED, NULL);
-	new = ft_memcpy((void *)new, (void *)input, md5->dft_size);
+	new = ft_memcpy((void *)new, (void *)ssl->input, md5->dft_size);
 	if (md5->dft_size % 64 > 55)
 		pad_zero = 64 - ((md5->dft_size % 64) + 1) + 56;
 	else
@@ -126,7 +142,6 @@ void md5_processing(t_md5 *md5, char *input)
 	new[md5->dft_size] = (unsigned char)0b10000000;
 	ft_memset(new + md5->dft_size + 1, 0, pad_zero);
 	*(size_t *)(&new[md5->pad_size - 8]) = md5->dft_size*8;	
-	i = 0;
 	buf = new;
 	while (i < md5->pad_size)
 	{
@@ -147,6 +162,8 @@ void md5_processing(t_md5 *md5, char *input)
 	for (int i = 0; i < 4; i++)
 		sprintf(hash + 24 + i * 2, "%02x", ((uint8_t *)&d0)[i]);
 	hash[32] = '\0';
+	ft_bzero(ssl->output, ft_strlen(ssl->output));
+	ssl->output = ft_strdup(hash);
 	printf("MD5 = %s\n", hash);
 	free(hash);
 }
