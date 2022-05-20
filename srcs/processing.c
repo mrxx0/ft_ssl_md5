@@ -31,6 +31,11 @@ uint32_t K[64] = {0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 	0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
 
+#define F(X, Y, Z) ((X & Y) | (~X & Z))
+#define G(X, Y, Z) ((X & Z) | (Y & ~Z))
+#define H(X, Y, Z) (X ^ Y ^ Z)
+#define I(X, Y, Z) (Y ^ (X | ~Z))
+
 /*
    Here ABCD word are getting updated as soon as a the 4 function from 
    @md5_constant_loop are applied
@@ -59,35 +64,37 @@ void md5_constant_loop(t_md5 *md5, unsigned char *input_padded)
 	md5->B = b0;
 	md5->C = c0;
 	md5->D = d0;
+
+	
 	while (i < 64)
 	{
-		uint32_t F;
+		uint32_t f_result;
 		uint32_t g;
 		if (i < 16)
 		{
-			F = ((md5->B &md5->C) | ((~md5->B) & md5->D));
+			f_result = F(md5->B, md5->C, md5->D); 
 			g = i;
 		}
 		else if (i < 32)
 		{
-			F = (md5->D & md5->B) | ((~md5->D) & md5->C);
+			f_result = G(md5->B, md5->C, md5->D);
 			g = (5 * i + 1) % 16;
 		}
 		else if (i < 48)
 		{
-			F = (md5->B ^ md5->C ^ md5->D);
+			f_result = H(md5->B, md5->C, md5->D);
 			g = (3 * i + 5) % 16;
 		}
 		else 
 		{
-			F = (md5->C ^(md5->B | (~md5->D)));
+			f_result = I(md5->B, md5->C, md5->D);
 			g = (7 * i) % 16; 
 		}
-		F += md5->A + K[i] + M[g];
+		f_result += md5->A + K[i] + M[g];
 		md5->A = md5->D;
 		md5->D = md5->C;
 		md5->C = md5->B;
-		md5->B += (F << s[i] | F >> (32 - s[i]));
+		md5->B += (f_result << s[i] | f_result >> (32 - s[i]));
 		i++;
 	}
 	md5_update_abcd(md5);
