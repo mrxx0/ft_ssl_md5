@@ -74,7 +74,7 @@ void 			execute(t_ssl *ssl);
 void 			md5 (t_ssl *ssl);
 t_md5   		*init_new_md5(size_t input_size);
 void   			 clear_md5(t_md5 *md5);
-void 			md5_processing(t_md5 *md5, char *input);
+void 			md5_processing(t_md5 *md5, t_ssl *ssl);
 unsigned char	*prepare_md5_padded_message(char *msg, size_t dft_size, size_t pad_size);
 
 
