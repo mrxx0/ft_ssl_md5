@@ -1,4 +1,5 @@
 #include "../includes/ft_ssl.h"
+#include <sys/types.h>
 
 /*
     Debug print for md5
@@ -38,17 +39,13 @@ char	*prepare_md5_padded_message(char *msg, size_t dft_size, size_t pad_size)
     Init md5 structure.
 */
 
-t_md5   *init_new_md5(char *input, size_t input_size)
+t_md5   *init_new_md5(size_t input_size)
 {
     t_md5 *md5;
 
     md5 = NULL;
     if (!(md5 = (t_md5 *)ft_memalloc(sizeof(t_md5))))
         handle_errors(MALLOC_FAILED, NULL);
-    md5->A = 0x67452301;
-    md5->B = 0xEFCDAB89;
-    md5->C = 0x98BADCFE;
-    md5->D = 0x10325476;
     md5->dft_size = input_size;
     if (md5->dft_size % 64 == 56)
         md5->pad_size = 72 + md5->dft_size;
@@ -59,11 +56,11 @@ t_md5   *init_new_md5(char *input, size_t input_size)
         else
             md5->pad_size = 128 - md5->dft_size % 64 + md5->dft_size;
     }
-    char *tmp = prepare_md5_padded_message(input, md5->dft_size, md5->pad_size);
-    printf("input = [%p]\npaded = [%p]\n", input, tmp);
-
-    print_md5(md5);
-    free(tmp);
+    // char *tmp = prepare_md5_padded_message(input, md5->dft_size, md5->pad_size);
+    // printf("input = [%p]\npaded = [%p]\n", input, tmp);
+    // printf("input size = %zu\n", ft_strlen(input));
+    // print_md5(md5);
+    // free(tmp);
     return (md5);
 }
 

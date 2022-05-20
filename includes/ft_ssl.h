@@ -37,12 +37,6 @@
 # define MD5    0
 # define SHA256 1
 
-/*      Bit-manipulation functions defined by the MD5 algorithm       */
-
-#define F(X, Y, Z) ((X & Y) | (~X & Z))
-#define G(X, Y, Z) ((X & Z) | (Y & ~Z))
-#define H(X, Y, Z) (X ^ Y ^ Z)
-#define I(X, Y, Z) (Y ^ (X | ~Z))
 
 /*      STRUCTURE       */
 
@@ -77,9 +71,10 @@ void    clear_ssl(t_ssl *ssl);
 bool 	read_input(char **argv, int *argc, t_ssl *ssl);
 void 	execute(char *input, size_t input_size, bool cmd);
 void 	md5 (char *input, size_t input_size);
-t_md5   *init_new_md5(char *input, size_t input_size);
+t_md5   *init_new_md5(size_t input_size);
 void    clear_md5(t_md5 *md5);
-void 	md5_processing(t_md5 *md5);
+void 	md5_processing(t_md5 *md5, char *input);
+char	*prepare_md5_padded_message(char *msg, size_t dft_size, size_t pad_size);
 
 
 /*          LIBFT       */
