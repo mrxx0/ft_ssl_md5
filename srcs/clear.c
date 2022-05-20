@@ -6,6 +6,12 @@
 
 void    clear_md5(t_md5 *md5)
 {
+    md5->A = 0;
+    md5->B = 0;
+    md5->C = 0;
+    md5->D = 0;
+    md5->dft_size = 0;
+    md5->pad_size = 0;
     if (md5)
         free(md5);
 }
@@ -16,11 +22,13 @@ void    clear_md5(t_md5 *md5)
 
 void    clear_ssl(t_ssl *ssl)
 {
-    ssl->input_size = 0;
+  
     if (ssl->input)
-        free(ssl->input);
-    ssl->input = NULL;
+        ft_strdel(&ssl->input);
     if (ssl->output)
-        free(ssl->output);
-    ssl->output = NULL;
+        ft_strdel(&ssl->output);
+    ssl->input_size = 0;
+    ssl->cmd = 0;
+    ssl->offset = 0;
+    ssl->flag = 0;
 }
