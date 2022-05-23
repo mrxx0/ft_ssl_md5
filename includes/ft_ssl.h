@@ -38,7 +38,6 @@
 # define MD5    0
 # define SHA256 1
 
-
 /*      STRUCTURE       */
 
 typedef struct				s_ssl
@@ -66,7 +65,7 @@ typedef struct				s_md5
 /*      PROTOTYPE       */
 
 bool 			parsing(char **argv, t_ssl *ssl);
-void 			handle_errors(int error_id, char *error);
+void 			handle_errors(int error_id, char *error, int cmd);
 t_ssl 			*init_new_ssl(void);
 void    		clear_ssl(t_ssl *ssl, bool flag);
 bool 			read_input(char **argv, int *argc, t_ssl *ssl);
@@ -76,6 +75,14 @@ t_md5   		*init_new_md5(size_t input_size);
 void   			clear_md5(t_md5 *md5);
 void 			md5_processing(t_md5 *md5, t_ssl *ssl);
 unsigned char	*prepare_md5_padded_message(char *msg, size_t dft_size, size_t pad_size);
+void 			print_hash(char *hash, char *arg, int flag, bool is_stdin);
+
+//
+void print_file(char *hash, char *arg, int flag);
+void print_string(char *hash, char *arg, int flag);
+void print_stdin(char *hash, char *arg, int flag);
+//
+
 
 
 /*          LIBFT       */

@@ -11,7 +11,7 @@ CFLAGS += -Wpadded
 #-----------------------------------------SRC/INC------------------------------#
 
 FT_SSL_FILES 	= 	main parsing lib handle_errors init read_input execute md5 \
-					clear processing
+					clear processing  print_hash
 
 INC_FILES 	= ft_ssl.h
 

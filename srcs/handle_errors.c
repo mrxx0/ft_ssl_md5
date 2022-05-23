@@ -4,8 +4,15 @@
     Handling errors with specific id code.
 */
 
-void handle_errors(int error_id, char *error)
+void handle_errors(int error_id, char *error, int cmd)
 {
+    char *cmd_str;
+    if (cmd == MD5)
+        cmd_str = "md5";
+    else if (cmd == SHA256)
+        cmd_str = "sha256";
+    else
+        cmd_str = NULL;
     if (error_id == COMMAND_ERR)
     {
         printf("ft_ssl: Error: '%s' is an invalid command."
@@ -38,7 +45,7 @@ void handle_errors(int error_id, char *error)
     }
     if (error_id == INVALID_FILE_DIRECTORY)
     {
-        printf("ft_ssl: %s: No such file or directory\n", error);
+        printf("ft_ssl: %s: %s: No such file or directory\n", cmd_str, error);
     }
     if (error_id == MISSING_ARG)
     {

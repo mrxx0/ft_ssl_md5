@@ -18,6 +18,6 @@ int main(int argc, char **argv)
 		free(ssl);
 		return (TRUE);
 	}
-	handle_errors(USAGE, NULL);
+	handle_errors(USAGE, NULL, -1);
 	return (1);
 }

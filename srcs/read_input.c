@@ -9,7 +9,7 @@
 void        read_input_string(char **argv, int i, t_ssl *ssl)
 {
 	if (!argv[i])
-		handle_errors(MISSING_ARG, NULL);
+		handle_errors(MISSING_ARG, NULL, ssl->cmd);
 	ssl->input = ft_strdup(argv[i]);
 	ssl->input_size = ft_strlen(ssl->input);
 }
@@ -33,29 +33,29 @@ void         read_input_stdin(t_ssl *ssl)
 	{
 		if (!(ssl->input = strnjoins(
 						ssl->input, buffer, ssl->input_size, read_return)))
-			handle_errors(MALLOC_FAILED, NULL);
+			handle_errors(MALLOC_FAILED, NULL, -1);
 		ssl->input_size += read_return;
 		ft_bzero(buffer, 512 + 1);
 	}
 	close(STDIN_FILENO);
 	if (!ssl->input)
 		if (!(ssl->input = ft_strdup("")))
-			handle_errors(MALLOC_FAILED, NULL);
+			handle_errors(MALLOC_FAILED, NULL, -1);
 }
 
 /*
    Returns the fd index to open the input.
    */
 
-int open_input(char *input)
+int open_input(char *input, int cmd)
 {
 	int fd;
 	struct stat buf;
 
 	if ((fd = open(input, O_RDONLY)) == -1)
-		handle_errors(INVALID_FILE_DIRECTORY, input);
+		handle_errors(INVALID_FILE_DIRECTORY, input, cmd);
 	if (fstat(fd, &buf) == 0 && S_ISDIR(buf.st_mode))
-		handle_errors(INVALID_FILE_DIRECTORY, input);
+		handle_errors(INVALID_FILE_DIRECTORY, input, cmd);
 	return (fd);
 }
 
@@ -85,12 +85,12 @@ void         read_input_file(t_ssl *ssl, char *input)
 	ssize_t read_return = 0;
 	uint64_t buffer_size;
 
-	fd = open_input(input);
+	fd = open_input(input, ssl->cmd);
 	buffer_size = get_input_size(fd);
 	if (!(buffer = (char *)ft_memalloc(sizeof(char) * (buffer_size + 1))))
 	{
 		close(fd);
-		handle_errors(MALLOC_FAILED, NULL);
+		handle_errors(MALLOC_FAILED, NULL, ssl->cmd);
 	}
 	while ((read_return = read(fd, buffer, buffer_size)) > 0)
 	{
@@ -98,7 +98,7 @@ void         read_input_file(t_ssl *ssl, char *input)
 						ssl->input, buffer, ssl->input_size, read_return)))
 		{
 			close(fd);
-			handle_errors(MALLOC_FAILED, NULL);
+			handle_errors(MALLOC_FAILED, NULL, -1);
 		}
 		ssl->input_size += read_return;
 		ft_bzero(buffer, buffer_size);
@@ -116,21 +116,19 @@ void         read_input_file(t_ssl *ssl, char *input)
 bool read_input(char **argv, int *argc, t_ssl *ssl)
 {
 	int i = ssl->offset;
-	printf("OFFSET = %s\n", argv[i]);
+
 	if ((ssl->flag & FLAG_P) != 0)
 	{
 		read_input_stdin(ssl);
 		execute(ssl);
-		// Dispatch to hash algorithm
-		printf("%s%30s\n", ssl->input , ssl->output);
+		print_stdin(ssl->output, ssl->input, ssl->flag);
 		clear_ssl(ssl, 0);
 	}
 	if ((ssl->flag & FLAG_S) != 0)
 	{
 		read_input_string(argv, i, ssl);
 		execute(ssl);
-		// Dispatch to hash algorithm
-		printf("%s%30s\n", argv[i], ssl->output);
+		print_string(ssl->output, ssl->input, ssl->flag);
 		clear_ssl(ssl, 0);
 		i++;
 	}
@@ -138,16 +136,14 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
 	{
 		read_input_stdin(ssl);
 		execute(ssl);
-		// Dispatch to hash algorithm
-		printf("%s%30s\n", argv[i], ssl->output);
+		print_stdin(ssl->output, ssl->input, ssl->flag);
 		clear_ssl(ssl, 0);
 	}
 	while (i < *argc)
 	{
 		read_input_file(ssl, argv[i]);
 		execute(ssl);
-		// Dispatch to hash algorithm
-		printf("%s%50s\n", argv[i], ssl->output);
+		print_file(ssl->output, argv[i], ssl->flag);
 		clear_ssl(ssl, 1);
 		i++;
 	}
