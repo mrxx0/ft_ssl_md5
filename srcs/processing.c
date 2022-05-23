@@ -164,6 +164,5 @@ void md5_processing(t_md5 *md5, t_ssl *ssl)
 	hash[32] = '\0';
 	ft_bzero(ssl->output, ft_strlen(ssl->output));
 	ssl->output = ft_strdup(hash);
-	printf("MD5 = %s\n", hash);
 	free(hash);
 }

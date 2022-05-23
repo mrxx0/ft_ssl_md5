@@ -116,12 +116,13 @@ void         read_input_file(t_ssl *ssl, char *input)
 bool read_input(char **argv, int *argc, t_ssl *ssl)
 {
 	int i = ssl->offset;
-	
+	printf("OFFSET = %s\n", argv[i]);
 	if ((ssl->flag & FLAG_P) != 0)
 	{
 		read_input_stdin(ssl);
 		execute(ssl);
 		// Dispatch to hash algorithm
+		printf("%s%30s\n", ssl->input , ssl->output);
 		clear_ssl(ssl, 0);
 	}
 	if ((ssl->flag & FLAG_S) != 0)
@@ -129,6 +130,7 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
 		read_input_string(argv, i, ssl);
 		execute(ssl);
 		// Dispatch to hash algorithm
+		printf("%s%30s\n", argv[i], ssl->output);
 		clear_ssl(ssl, 0);
 		i++;
 	}
@@ -137,6 +139,7 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
 		read_input_stdin(ssl);
 		execute(ssl);
 		// Dispatch to hash algorithm
+		printf("%s%30s\n", argv[i], ssl->output);
 		clear_ssl(ssl, 0);
 	}
 	while (i < *argc)
@@ -144,6 +147,7 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
 		read_input_file(ssl, argv[i]);
 		execute(ssl);
 		// Dispatch to hash algorithm
+		printf("%s%50s\n", argv[i], ssl->output);
 		clear_ssl(ssl, 1);
 		i++;
 	}
