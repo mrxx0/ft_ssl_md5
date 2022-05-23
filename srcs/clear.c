@@ -20,7 +20,7 @@ void    clear_md5(t_md5 *md5)
     Clear ssl structure.
 */
 
-void    clear_ssl(t_ssl *ssl)
+void    clear_ssl(t_ssl *ssl, bool flag)
 {
   
     if (ssl->input)
@@ -30,5 +30,6 @@ void    clear_ssl(t_ssl *ssl)
     ssl->input_size = 0;
     ssl->cmd = 0;
     ssl->offset = 0;
-    ssl->flag = 0;
+    if (flag == 1)
+        ssl->flag = 0;
 }
