@@ -62,6 +62,13 @@ typedef struct				s_md5
 
 }							t_md5;
 
+typedef struct				s_sha256
+{
+	size_t					dft_size;
+	size_t					pad_size;
+
+}							t_sha256;
+
 /*      PROTOTYPE       */
 
 bool 			parsing(char **argv, t_ssl *ssl);
@@ -76,12 +83,13 @@ void   			clear_md5(t_md5 *md5);
 void 			md5_processing(t_md5 *md5, t_ssl *ssl);
 unsigned char	*prepare_md5_padded_message(char *msg, size_t dft_size, size_t pad_size);
 void 			print_hash(char *hash, char *arg, int flag, bool is_stdin);
-
-//
-void print_file(char *hash, char *arg, int flag);
-void print_string(char *hash, char *arg, int flag);
-void print_stdin(char *hash, char *arg, int flag);
-//
+void 			print_file(char *hash, char *arg, int flag);
+void 			print_string(char *hash, char *arg, int flag);
+void 			print_stdin(char *hash, char *arg, int flag);
+void 			sha256 (t_ssl *ssl);
+t_sha256   		*init_new_sha256(size_t input_size);
+void 			sha256_processing(t_sha256 *sha256, t_ssl *ssl);
+void   			clear_sha256(t_sha256 *sha256);
 
 
 

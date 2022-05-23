@@ -8,6 +8,6 @@ void execute(t_ssl *ssl)
 {
     if (ssl->cmd == MD5)
         md5(ssl);
-    // else if (ssl->cmd == SHA256)
-    //     sha256(ssl);
+    else if (ssl->cmd == SHA256)
+        sha256(ssl);
 }

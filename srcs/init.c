@@ -2,6 +2,16 @@
 #include <sys/types.h>
 
 /*
+    Debug print for sha256
+*/
+
+void print_sha256(t_sha256 *sha256)
+{
+    printf("sha256->dft_size = %zu\n", sha256->dft_size);
+    printf("sha256->pad_size = %zu\n\n", sha256->pad_size);
+}
+
+/*
     Debug print for md5
 */
 
@@ -13,6 +23,31 @@ void print_md5(t_md5 *md5)
     printf("md5->D = %u\n", md5->D);
     printf("md5->dft_size = %zu\n", md5->dft_size);
     printf("md5->pad_size = %zu\n\n", md5->pad_size);
+}
+
+/*
+    Init sha256 structure.
+*/
+
+t_sha256   *init_new_sha256(size_t input_size)
+{
+    t_sha256 *sha256;
+
+    sha256 = NULL;
+    if (!(sha256 = (t_sha256 *)ft_memalloc(sizeof(t_sha256))))
+        handle_errors(MALLOC_FAILED, NULL, -1);
+    sha256->dft_size = input_size;
+    if (sha256->dft_size % 64 == 56)
+        sha256->pad_size = 72 + sha256->dft_size;
+    else
+    {
+        if (sha256->dft_size % 64 < 56)
+            sha256->pad_size = 64 - sha256->dft_size % 64 + sha256->dft_size;
+        else
+            sha256->pad_size = 128 - sha256->dft_size % 64 + sha256->dft_size;
+    }
+    print_sha256(sha256);
+    return (sha256);
 }
 
 /*

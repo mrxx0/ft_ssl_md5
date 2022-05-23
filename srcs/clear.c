@@ -1,6 +1,18 @@
 #include "../includes/ft_ssl.h"
 
 /*
+    Clear sha256 structure.
+*/
+
+void    clear_sha256(t_sha256 *sha256)
+{
+    sha256->dft_size = 0;
+    sha256->pad_size = 0;
+    if (sha256)
+        free(sha256);
+}
+
+/*
     Clear md5 structure.
 */
 
