@@ -133,7 +133,7 @@ void md5_processing(t_md5 *md5, t_ssl *ssl)
 	unsigned char 		*buf;
 
 	if (!(new = (unsigned char *)malloc(sizeof(char) * md5->pad_size)))
-		handle_errors(MALLOC_FAILED, NULL, -1);
+		handle_errors(MALLOC_FAILED, NULL, -1, ssl);
 	new = ft_memcpy((void *)new, (void *)ssl->input, md5->dft_size);
 	if (md5->dft_size % 64 > 55)
 		pad_zero = 64 - ((md5->dft_size % 64) + 1) + 56;
@@ -152,7 +152,7 @@ void md5_processing(t_md5 *md5, t_ssl *ssl)
 	free(new);
 	char *hash = malloc(sizeof(char) * 33);
 	if (!hash)
-		handle_errors(MALLOC_FAILED, NULL, -1);
+		handle_errors(MALLOC_FAILED, NULL, -1, ssl);
 	for (int i = 0; i < 4; i++)
 		sprintf(hash + i * 2, "%02x", ((uint8_t *)&a0)[i]);
 	for (int i = 0; i < 4; i++)

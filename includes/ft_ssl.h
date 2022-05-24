@@ -48,7 +48,8 @@ typedef struct				s_ssl
     int                     cmd;
 	int 					offset;
 	int                     flag;
-    char                    pad[4];
+	char					pad[3];
+	bool					valid;
 }							t_ssl;
 
 typedef struct				s_md5
@@ -72,7 +73,7 @@ typedef struct				s_sha256
 /*      PROTOTYPE       */
 
 bool 			parsing(char **argv, t_ssl *ssl);
-void 			handle_errors(int error_id, char *error, int cmd);
+int 			handle_errors(int error_id, char *error, int cmd, t_ssl *ssl);
 t_ssl 			*init_new_ssl(void);
 void    		clear_ssl(t_ssl *ssl, bool flag);
 bool 			read_input(char **argv, int *argc, t_ssl *ssl);

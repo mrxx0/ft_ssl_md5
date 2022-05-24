@@ -12,12 +12,9 @@ int main(int argc, char **argv)
 			return (FALSE);
 		}
 		read_input(argv, &argc, ssl);
-		// delete ssl
-		if (ssl->input)
-			free(ssl->input);
 		free(ssl);
 		return (TRUE);
 	}
-	handle_errors(USAGE, NULL, -1);
+	handle_errors(USAGE, NULL, -1, NULL);
 	return (1);
 }

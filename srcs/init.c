@@ -35,7 +35,7 @@ t_sha256   *init_new_sha256(size_t input_size)
 
     sha256 = NULL;
     if (!(sha256 = (t_sha256 *)ft_memalloc(sizeof(t_sha256))))
-        handle_errors(MALLOC_FAILED, NULL, -1);
+        handle_errors(MALLOC_FAILED, NULL, -1, NULL);
     sha256->dft_size = input_size;
     if (sha256->dft_size % 64 == 56)
         sha256->pad_size = 72 + sha256->dft_size;
@@ -60,7 +60,7 @@ t_md5   *init_new_md5(size_t input_size)
 
     md5 = NULL;
     if (!(md5 = (t_md5 *)ft_memalloc(sizeof(t_md5))))
-        handle_errors(MALLOC_FAILED, NULL, -1);
+        handle_errors(MALLOC_FAILED, NULL, -1, NULL);
     md5->dft_size = input_size;
     if (md5->dft_size % 64 == 56)
         md5->pad_size = 72 + md5->dft_size;
@@ -84,10 +84,11 @@ t_ssl   *init_new_ssl(void)
 
     ssl = NULL;
     if (!(ssl = (t_ssl *)ft_memalloc(sizeof(t_ssl))))
-        handle_errors(MALLOC_FAILED, NULL, -1);
+        handle_errors(MALLOC_FAILED, NULL, -1, NULL);
     ssl->input_size = 0;
     ssl->cmd = 0;
     ssl->offset = 0;
     ssl->flag = 0;
+    ssl->valid = 1;
     return (ssl);
 }

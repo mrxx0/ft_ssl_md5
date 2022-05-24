@@ -4,7 +4,7 @@
     Handling errors with specific id code.
 */
 
-void handle_errors(int error_id, char *error, int cmd)
+int handle_errors(int error_id, char *error, int cmd, t_ssl *ssl)
 {
     char *cmd_str;
     if (cmd == MD5)
@@ -21,6 +21,7 @@ void handle_errors(int error_id, char *error, int cmd)
         "\n\tsha256"
         "\nFlags:"
         "\n\t-p -q -r -s\n", error);
+        exit(EXIT_FAILURE);
     }
     if (error_id == FLAG_ERR)
     {
@@ -30,26 +31,33 @@ void handle_errors(int error_id, char *error, int cmd)
         "\n\tsha256"
         "\nFlags:"
         "\n\t-p -q -r -s\n", error);
+        exit(EXIT_FAILURE);
     }
     if (error_id == USAGE)
     {
         printf("%s", "usage: ft_ssl command [flags] [file/string]\n");
+        exit(EXIT_FAILURE);
     }
     if (error_id == MALLOC_FAILED)
     {
         printf("%s", "ft_ssl : Error : Failed to allocate memory.\n");
+        exit(EXIT_FAILURE);
     }
     if (error_id == REPETED_FLAG)
     {
         printf("ft_ssl: Error: flag '%s' is already set.\n", error);
+        exit(EXIT_FAILURE);
     }
     if (error_id == INVALID_FILE_DIRECTORY)
     {
-        printf("ft_ssl: %s: %s: No such file or directory\n", cmd_str, error);
+        fprintf(stderr, "ft_ssl: %s: %s: No such file or directory\n",cmd_str, error);
+        ssl->valid = 0;
+        return (0);
     }
     if (error_id == MISSING_ARG)
     {
         printf("ft_ssl: -s flag requires an argument.\n");
+        exit(EXIT_FAILURE);
     }
-    exit(EXIT_FAILURE);
+    return (0);
 }

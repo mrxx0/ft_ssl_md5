@@ -33,8 +33,7 @@ void    clear_md5(t_md5 *md5)
 */
 
 void    clear_ssl(t_ssl *ssl, bool flag)
-{
-  
+{ 
     if (ssl->input)
         ft_strdel(&ssl->input);
     if (ssl->output)
@@ -42,6 +41,7 @@ void    clear_ssl(t_ssl *ssl, bool flag)
     ssl->input_size = 0;
     ssl->cmd = 0;
     ssl->offset = 0;
+    ssl->valid = 1;
     if (flag == 1)
         ssl->flag = 0;
 }

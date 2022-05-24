@@ -19,7 +19,7 @@ bool parse_command(char **argv, t_ssl *ssl)
         return (TRUE);
     }
     ssl->cmd = 0;
-    handle_errors(COMMAND_ERR, argv[1], -1);
+    handle_errors(COMMAND_ERR, argv[1], -1, ssl);
     return (FALSE);
 }
 
@@ -87,19 +87,19 @@ bool parse_flags(char **argv, t_ssl	*ssl)
     {
             if (ft_strlen(argv[i]) > 2)
             {
-                handle_errors(FLAG_ERR, argv[i], -1);
+                handle_errors(FLAG_ERR, argv[i], -1, ssl);
                 return (FALSE);
             }
             if (check_flag(argv[i][1]) == FALSE)
             {
-                handle_errors(FLAG_ERR, argv[i], -1);
+                handle_errors(FLAG_ERR, argv[i], -1, ssl);
                 return (FALSE);
             }
             else
             {
                 if (stock_flag(argv[i][1], ssl) == FALSE)
                 {
-                    handle_errors(5, &argv[i][1], -1);
+                    handle_errors(REPETED_FLAG, &argv[i][1], -1, ssl);
                     return (FALSE);
                 }
             }

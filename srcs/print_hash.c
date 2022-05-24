@@ -31,7 +31,7 @@ char *find_new_line(char *str)
     char *new_str = malloc(sizeof(char) * len_str);
     if (!new_str)
     {
-        handle_errors(MALLOC_FAILED, NULL, -1);
+        handle_errors(MALLOC_FAILED, NULL, -1, NULL);
         return (NULL);
     }
     while (i < len_str - 1)
