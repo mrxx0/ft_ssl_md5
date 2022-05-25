@@ -2,14 +2,14 @@
 
 /*		CONSTANT SHA256		*/
 
-uint32_t h0 = 0x6a09e667;
-uint32_t h1 = 0xbb67ae85;
-uint32_t h2 = 0x3c6ef372;
-uint32_t h3 = 0xa54ff53a;
-uint32_t h4 = 0x510e527f;
-uint32_t h5 = 0x9b05688c;
-uint32_t h6 = 0x1f83d9ab;
-uint32_t h7 = 0x5be0cd19;
+static uint32_t h0 = 0x6a09e667;
+static uint32_t h1 = 0xbb67ae85;
+static uint32_t h2 = 0x3c6ef372;
+static uint32_t h3 = 0xa54ff53a;
+static uint32_t h4 = 0x510e527f;
+static uint32_t h5 = 0x9b05688c;
+static uint32_t h6 = 0x1f83d9ab;
+static uint32_t h7 = 0x5be0cd19;
 
 static uint32_t K[64] = {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 
 	0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,

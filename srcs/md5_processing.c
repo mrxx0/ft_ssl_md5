@@ -4,17 +4,17 @@
 
 /*		CONSTANT MD5		*/
 
-uint32_t a0 = 0;
-uint32_t b0 = 0;
-uint32_t c0 = 0;
-uint32_t d0 = 0;
+static uint32_t a0 = 0;
+static uint32_t b0 = 0;
+static uint32_t c0 = 0;
+static uint32_t d0 = 0;
 
 #define word_A  0x67452301;
 #define word_B  0xEFCDAB89;
 #define word_C  0x98BADCFE;
 #define word_D  0x10325476;
 
-uint32_t s[64] = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
+static uint32_t s[64] = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
 	5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
 	4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
 	6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21};	
