@@ -41,6 +41,9 @@ static uint32_t K[64] = {0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 #define H(X, Y, Z) (X ^ Y ^ Z)
 #define I(X, Y, Z) (Y ^ (X | ~Z))
 
+#define LEFTROTATE(x, y) (((x) << (y)) | ((x) >> (32 - (y))))
+
+
 /*
    Here ABCD word are getting updated as soon as a the 4 function from 
    @md5_constant_loop are applied
@@ -98,7 +101,7 @@ void md5_constant_loop(t_md5 *md5, unsigned char *input_padded)
 		md5->A = md5->D;
 		md5->D = md5->C;
 		md5->C = md5->B;
-		md5->B += (f_result << s[i] | f_result >> (32 - s[i]));
+		md5->B += LEFTROTATE(f_result, s[i]);
 		i++;
 	}
 	md5_update_abcd(md5);
