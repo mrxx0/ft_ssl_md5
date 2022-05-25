@@ -24,45 +24,15 @@ void print_string(char *hash, char *arg, int flag)
         printf("MD5 (\"%s\") = %s\n", arg, hash);
 }
 
-char *find_new_line(char *str)
-{
-    size_t len_str = ft_strlen(str);
-    size_t i = 0;
-    char *new_str = malloc(sizeof(char) * len_str);
-    if (!new_str)
-    {
-        handle_errors(MALLOC_FAILED, NULL, -1, NULL);
-        return (NULL);
-    }
-    while (i < len_str - 1)
-    {
-        new_str[i] = str[i];
-        i++;
-    }
-    new_str[i] = '\0';
-    return (new_str);
-}
-
 void print_stdin(char *hash, char *arg, int flag)
 {
     if ((flag & FLAG_Q) != 0
     && (flag & FLAG_P) != 0)
-    {
-        if (arg[ft_strlen(arg)] != '\n')
-            arg = find_new_line(arg);
-        printf("%s\n", arg);
-        printf("%s\n", hash);
-        free(arg);
-    }
+        printf("%.*s\n%s\n", ft_strlen_nonl(arg), arg, hash);
     else if ((flag & FLAG_Q) != 0)
         printf("%s\n", hash);
     else if ((flag & FLAG_P) != 0)
-    {
-        if (arg[ft_strlen(arg)] != '\n')
-            arg = find_new_line(arg);
-        printf("(\"%s\")= %s\n", arg, hash);  
-        free(arg);  
-    }
+        printf("(\"%.*s\")= %s\n",ft_strlen_nonl(arg), arg, hash);  
     else
         printf("(stdin)= %s\n", hash);
 }

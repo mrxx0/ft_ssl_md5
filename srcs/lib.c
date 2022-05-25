@@ -1,5 +1,15 @@
 #include "../includes/ft_ssl.h"
 
+int ft_strlen_nonl(char *str)
+{
+    int i;
+
+	i = 0;
+	while (str[i] >= ' ' && str[i] <= '~')
+		i++;
+	return (i);
+}
+
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t i;

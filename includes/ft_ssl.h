@@ -105,5 +105,6 @@ char	*ft_strdup(const char *s1);
 char	*strnjoins(char *s1, char *s2, size_t len1, size_t len2);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 void	*ft_memset(void *b, int c, size_t n);
+int     ft_strlen_nonl(char *str);
 
 #endif
