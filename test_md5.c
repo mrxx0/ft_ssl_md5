@@ -112,6 +112,7 @@ void test_md5(int user_choice)
 	else
 	{
 		printf("Exiting\n");
+		system("rm file");
 		exit(EXIT_FAILURE);
 	}
 	printf("\nPress any key to continue...");
