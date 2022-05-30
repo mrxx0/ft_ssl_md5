@@ -4,24 +4,34 @@
     Print each elements with their associated option.
 */
 
-void print_file(char *hash, char *arg, int flag)
+void print_file(char *hash, char *arg, int flag, int cmd)
 {
     if ((flag & FLAG_Q) != 0)
         printf("%s\n", hash);
     else if ((flag & FLAG_R) != 0)
         printf("%s %s\n", hash, arg);
     else
-        printf("MD5 (%s) = %s\n", arg, hash);
+    {
+        if (cmd == MD5)
+            printf("MD5 (%s) = %s\n", arg, hash);
+        else if (cmd == SHA256)
+            printf("SHA256 (%s) = %s\n", arg, hash);
+    }
 }
 
-void print_string(char *hash, char *arg, int flag)
+void print_string(char *hash, char *arg, int flag, int cmd)
 {
     if ((flag & FLAG_Q) != 0)
         printf("%s\n", hash);
     else if ((flag & FLAG_R) != 0)
         printf("%s \"%s\"\n", hash, arg);
     else
-        printf("MD5 (\"%s\") = %s\n", arg, hash);
+    {
+        if (cmd == MD5)
+            printf("MD5 (\"%s\") = %s\n", arg, hash);
+        else if (cmd == SHA256)
+            printf("SHA256 (\"%s\") = %s\n", arg, hash);
+    }
 }
 
 void print_stdin(char *hash, char *arg, int flag)

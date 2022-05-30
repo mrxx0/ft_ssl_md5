@@ -128,7 +128,7 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
 	{
 		read_input_string(argv, i, ssl);
 		execute(ssl);
-		print_string(ssl->output, ssl->input, ssl->flag);
+		print_string(ssl->output, ssl->input, ssl->flag, ssl->cmd);
 		clear_ssl(ssl, 0);
 		i++;
 	}
@@ -145,7 +145,7 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
 		if (ssl->valid == 1)
 		{
 			execute(ssl);
-			print_file(ssl->output, argv[i], ssl->flag);
+			print_file(ssl->output, argv[i], ssl->flag, ssl->cmd);
 		}
 		clear_ssl(ssl, 0);
 		i++;
