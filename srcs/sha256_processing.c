@@ -30,21 +30,46 @@ static uint32_t K[64] = {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
 	0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 
+#define RIGHTROTATE(X, Y) (((X) >> (Y)) | ((X << (32 - (Y)))))
+#define CH(X, Y, Z) ((X & Y) ^ ((-X) & Z))
+#define MAJ(X, Y, Z) ((X & Y) ^ (X & Z) ^ (Y & Z))
+#define SSIG0(X) (RIGHTROTATE(X, 7) ^ RIGHTROTATE(X, 18) ^ SHR(X, 3))
+#define SSIG1(X) (RIGHTROTATE(X, 17) ^ RIGHTROTATE(X, 19) ^ SHR(X, 10))
+#define SHR(X, Y) ((X) >> (Y))
+
 void sha256_constant_loop(t_sha256 *sha256, unsigned char *input_padded)
 {
     (void)sha256;
 	uint32_t i = 0;
 	uint32_t j = 0;
     uint32_t w[64];
+	uint32_t s0 = 0;
+	uint32_t s1 = 0;
+	// uint32_t a = h0;
+	// uint32_t b = h1;
+	// uint32_t c = h2;
+	// uint32_t d = h3;
+	// uint32_t e = h4;
+	// uint32_t f = h5;
+	// uint32_t g = h6;
+	// uint32_t h = h7;
 
     while (i < 16)
     {
         w[i] = (uint32_t) input_padded[0 + j] << 24 | (uint32_t) input_padded[1 + j] << 16 | (uint32_t) input_padded[2 + j] << 8 | (uint32_t) input_padded[3 + j];
         //printf("%d\n", w[i]);
-		w[i]++;
         i++;
         j += 4;
-    }
+	}
+
+	while (i < 64)
+	{
+		s0 = SSIG0(w[i - 15]);
+		s1 = SSIG1(w[i - 2]);
+		w[i] = w[i - 16] + s0 + w[i - 7] + s1;
+		i++;
+	}
+	printf("w complete\n");
 }
 
 /*
