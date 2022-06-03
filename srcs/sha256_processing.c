@@ -40,7 +40,8 @@ void sha256_constant_loop(t_sha256 *sha256, unsigned char *input_padded)
     while (i < 16)
     {
         w[i] = (uint32_t) input_padded[0 + j] << 24 | (uint32_t) input_padded[1 + j] << 16 | (uint32_t) input_padded[2 + j] << 8 | (uint32_t) input_padded[3 + j];
-        printf("%d\n", w[i]);
+        //printf("%d\n", w[i]);
+		w[i]++;
         i++;
         j += 4;
     }
@@ -87,4 +88,5 @@ void sha256_processing(t_sha256 *sha256, t_ssl *ssl)
     (void)h5;
     (void)h6;
     (void)h7;
+	ssl->output = ft_strdup("foo");
 }
