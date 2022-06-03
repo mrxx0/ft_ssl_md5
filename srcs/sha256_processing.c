@@ -36,6 +36,12 @@ static uint32_t K[64] = {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
 #define MAJ(X, Y, Z) ((X & Y) ^ (X & Z) ^ (Y & Z))
 #define SSIG0(X) (RIGHTROTATE(X, 7) ^ RIGHTROTATE(X, 18) ^ RIGHTSHIFT(X, 3))
 #define SSIG1(X) (RIGHTROTATE(X, 17) ^ RIGHTROTATE(X, 19) ^ RIGHTSHIFT(X, 10))
+#define BSIG0(X) (RIGHTROTATE(X, 2) ^ RIGHTROTATE(X, 13) ^ RIGHTROTATE(X, 22))
+#define BSIG1(X) (RIGHTROTATE(X, 6) ^ RIGHTROTATE(X, 11) ^ RIGHTROTATE(X, 25))
+#define S0(X) (RIGHTROTATE(X, 28) ^ RIGHTROTATE(X, 34) ^ RIGHTROTATE(X, 39))
+#define S1(X) (RIGHTROTATE(X, 14) ^ RIGHTROTATE(X, 18) ^ RIGHTROTATE(X, 41))
+#define s0(X) (RIGHTROTATE(X, 1) ^ RIGHTROTATE(X, 8) ^ RIGHTROTATE(X, 7))
+#define s1(X) (RIGHTROTATE(X, 19) ^ RIGHTROTATE(X, 61) ^ RIGHTROTATE(X, 6))
 
 void sha256_constant_loop(t_sha256 *sha256, unsigned char *input_padded)
 {
@@ -43,16 +49,20 @@ void sha256_constant_loop(t_sha256 *sha256, unsigned char *input_padded)
 	uint32_t i = 0;
 	uint32_t j = 0;
     uint32_t w[64];
-	uint32_t s0 = 0;
-	uint32_t s1 = 0;
-	// uint32_t a = h0;
-	// uint32_t b = h1;
-	// uint32_t c = h2;
-	// uint32_t d = h3;
-	// uint32_t e = h4;
-	// uint32_t f = h5;
-	// uint32_t g = h6;
-	// uint32_t h = h7;
+	uint32_t s0_r = 0;
+	uint32_t s1_r = 0;
+	uint32_t S0_r = 0;
+	uint32_t S1_r = 0;
+	uint32_t tmp = 0;
+	uint32_t tmp2 = 0;
+	uint32_t a = h0;
+	uint32_t b = h1;
+	uint32_t c = h2;
+	uint32_t d = h3;
+	uint32_t e = h4;
+	uint32_t f = h5;
+	uint32_t g = h6;
+	uint32_t h = h7;
 
     while (i < 16)
     {
@@ -63,12 +73,36 @@ void sha256_constant_loop(t_sha256 *sha256, unsigned char *input_padded)
 
 	while (i < 64)
 	{
-		s0 = SSIG0(w[i - 15]);
-		s1 = SSIG1(w[i - 2]);
-		w[i] = w[i - 16] + s0 + w[i - 7] + s1;
+		s0_r = s0(SSIG0(w[i - 15]));
+		s1_r = s1(SSIG1(w[i - 2]));
+		w[i] = w[i - 16] + s0_r + w[i - 7] + s1_r;
 		i++;
 	}
-	printf("w complete\n");
+	i = 0;
+	while (i < 64)
+	{
+		S1_r = S1(BSIG1(e));
+		tmp = h + S1_r + CH(e, f, g) + K[i] + w[i];
+		S0_r = S0(BSIG0(a));
+		tmp2 = S0_r + MAJ(a, b, c);
+		h = g;
+		g = f;
+		f = e;
+		e = d + tmp;
+		d = c;
+		c = b;
+		b = a;
+		a = tmp + tmp2;
+		i++;
+	}
+	h0 += a;
+	h1 += b;
+	h2 += c;
+	h3 += d;
+	h4 += e;
+	h5 += f;
+	h6 += g;
+	h7 += h;
 }
 
 /*
@@ -101,16 +135,20 @@ void sha256_processing(t_sha256 *sha256, t_ssl *ssl)
         buf += 64;
         i += 64;
     }
-
     free(new);
-    (void)K;
-    (void)h0;
-    (void)h1;
-    (void)h2;
-    (void)h3;
-    (void)h4;
-    (void)h5;
-    (void)h6;
-    (void)h7;
-	ssl->output = ft_strdup("foo");
+	char *hash = malloc(sizeof(char) * 66);
+	if (!hash)
+		handle_errors(MALLOC_FAILED, NULL, -1, ssl);
+	for (int i = 0; i < 4; i++)
+	// 	sprintf(hash + i * 2, "%02x", ((uint8_t *)&a0)[i]);
+	// for (int i = 0; i < 4; i++)
+	// 	sprintf(hash + 8 + i * 2, "%02x", ((uint8_t *)&b0)[i]);
+	// for (int i = 0; i < 4; i++)
+	// 	sprintf(hash + 16 + i * 2, "%02x", ((uint8_t *)&c0)[i]);
+	// for (int i = 0; i < 4; i++)
+	// 	sprintf(hash + 24 + i * 2, "%02x", ((uint8_t *)&d0)[i]);
+	hash[65] = '\0';
+	ft_bzero(ssl->output, ft_strlen(ssl->output));
+	ssl->output = ft_strdup(hash);
+	free(hash);
 }
