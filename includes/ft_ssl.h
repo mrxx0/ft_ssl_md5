@@ -92,7 +92,20 @@ t_sha256   		*init_new_sha256(size_t input_size);
 void 			sha256_processing(t_sha256 *sha256, t_ssl *ssl);
 void   			clear_sha256(t_sha256 *sha256);
 
+/*		SHA256 BINARY OPERATIONS	*/
 
+uint32_t	rightrotate(uint32_t x, uint32_t y);
+uint32_t    rightshift(uint32_t x, uint32_t y);
+uint32_t    ch(uint32_t x, uint32_t y, uint32_t z);
+uint32_t    maj(uint32_t x, uint32_t y, uint32_t z);
+uint32_t    ssig0(uint32_t x);
+uint32_t    ssig1(uint32_t x);
+uint32_t    bsig0(uint32_t x);
+uint32_t    bsig1(uint32_t x);
+uint32_t    S0(uint32_t x);
+uint32_t    S1(uint32_t x);
+uint32_t    s0(uint32_t x);
+uint32_t    s1(uint32_t x);
 
 /*          LIBFT       */
 

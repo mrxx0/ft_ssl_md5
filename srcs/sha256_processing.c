@@ -30,19 +30,6 @@ static uint32_t K[64] = {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
 	0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 
-#define RIGHTROTATE(X, Y) (((X) >> (Y)) | ((X << (32 - (Y)))))
-#define RIGHTSHIFT(X, Y) ((X) >> (Y))
-#define CH(X, Y, Z) ((X & Y) ^ ((-X) & Z))
-#define MAJ(X, Y, Z) ((X & Y) ^ (X & Z) ^ (Y & Z))
-#define SSIG0(X) (RIGHTROTATE(X, 7) ^ RIGHTROTATE(X, 18) ^ RIGHTSHIFT(X, 3))
-#define SSIG1(X) (RIGHTROTATE(X, 17) ^ RIGHTROTATE(X, 19) ^ RIGHTSHIFT(X, 10))
-#define BSIG0(X) (RIGHTROTATE(X, 2) ^ RIGHTROTATE(X, 13) ^ RIGHTROTATE(X, 22))
-#define BSIG1(X) (RIGHTROTATE(X, 6) ^ RIGHTROTATE(X, 11) ^ RIGHTROTATE(X, 25))
-#define S0(X) (RIGHTROTATE(X, 28) ^ RIGHTROTATE(X, 34) ^ RIGHTROTATE(X, 39))
-#define S1(X) (RIGHTROTATE(X, 14) ^ RIGHTROTATE(X, 18) ^ RIGHTROTATE(X, 41))
-#define s0(X) (RIGHTROTATE(X, 1) ^ RIGHTROTATE(X, 8) ^ RIGHTROTATE(X, 7))
-#define s1(X) (RIGHTROTATE(X, 19) ^ RIGHTROTATE(X, 61) ^ RIGHTROTATE(X, 6))
-
 void sha256_constant_loop(t_sha256 *sha256, unsigned char *input_padded)
 {
     (void)sha256;
@@ -73,18 +60,18 @@ void sha256_constant_loop(t_sha256 *sha256, unsigned char *input_padded)
 
 	while (i < 64)
 	{
-		s0_r = s0(SSIG0(w[i - 15]));
-		s1_r = s1(SSIG1(w[i - 2]));
+		s0_r = s0(ssig0(w[i - 15]));
+		s1_r = s1(ssig1(w[i - 2]));
 		w[i] = w[i - 16] + s0_r + w[i - 7] + s1_r;
 		i++;
 	}
 	i = 0;
 	while (i < 64)
 	{
-		S1_r = S1(BSIG1(e));
-		tmp = h + S1_r + CH(e, f, g) + K[i] + w[i];
-		S0_r = S0(BSIG0(a));
-		tmp2 = S0_r + MAJ(a, b, c);
+		S1_r = S1(bsig0(e));
+		tmp = h + S1_r + ch(e, f, g) + K[i] + w[i];
+		S0_r = S0(bsig1(a));
+		tmp2 = S0_r + maj(a, b, c);
 		h = g;
 		g = f;
 		f = e;
