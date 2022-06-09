@@ -156,14 +156,25 @@ void md5_processing(t_md5 *md5, t_ssl *ssl)
 	char *hash = malloc(sizeof(char) * 33);
 	if (!hash)
 		handle_errors(MALLOC_FAILED, NULL, -1, ssl);
-	for (int i = 0; i < 4; i++)
-		sprintf(hash + i * 2, "%02x", ((uint8_t *)&a0)[i]);
-	for (int i = 0; i < 4; i++)
-		sprintf(hash + 8 + i * 2, "%02x", ((uint8_t *)&b0)[i]);
-	for (int i = 0; i < 4; i++)
-		sprintf(hash + 16 + i * 2, "%02x", ((uint8_t *)&c0)[i]);
-	for (int i = 0; i < 4; i++)
-		sprintf(hash + 24 + i * 2, "%02x", ((uint8_t *)&d0)[i]);
+	uint64_t j = 0;
+	i = 0;
+	while (i < 32)
+	{
+		while (j < 4)
+		{
+			if (i < 4)
+				sprintf(hash + j * 2, "%02x", ((uint8_t *)&a0)[j]);
+			else if (i >= 4 && i < 8)
+				sprintf(hash + 8 + j * 2, "%02x", ((uint8_t *)&b0)[j]);
+			else if (i >= 8 && i < 16)
+				sprintf(hash + 16 + j * 2, "%02x", ((uint8_t *)&c0)[j]);
+			else if (i >= 16 && i < 24)
+				sprintf(hash + 24 + j * 2, "%02x", ((uint8_t *)&d0)[j]);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
 	hash[32] = '\0';
 	ft_bzero(ssl->output, ft_strlen(ssl->output));
 	ssl->output = ft_strdup(hash);
