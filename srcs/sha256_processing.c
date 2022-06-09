@@ -118,7 +118,6 @@ void sha256_processing(t_sha256 *sha256, t_ssl *ssl)
 	char *hash = malloc(sizeof(char) * 66);
 	if (!hash)
 		handle_errors(MALLOC_FAILED, NULL, -1, ssl);
-	// for (int i = 0; i < 8; i++)
 	sprintf(hash + 8 * 0, "%08x", h0);
 	sprintf(hash + 8 * 1, "%08x", h1);
 	sprintf(hash + 8 * 2, "%08x", h2);
