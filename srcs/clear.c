@@ -39,7 +39,6 @@ void    clear_ssl(t_ssl *ssl, bool flag)
     if (ssl->output)
         ft_strdel(&ssl->output);
     ssl->input_size = 0;
-    ssl->cmd = 0;
     ssl->offset = 0;
     ssl->valid = 1;
     if (flag == 1)
