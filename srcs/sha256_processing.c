@@ -30,18 +30,13 @@ static uint32_t K[64] = {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
 	0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 
-void sha256_constant_loop(t_sha256 *sha256, unsigned char *input_padded)
+void sha256_constant_loop(unsigned char *input_padded)
 {
-    (void)sha256;
 	uint32_t i = 0;
 	uint32_t j = 0;
     uint32_t w[64];
-	uint32_t s0_r = 0;
-	uint32_t s1_r = 0;
-	uint32_t S0_r = 0;
-	uint32_t S1_r = 0;
-	uint32_t tmp = 0;
-	uint32_t tmp2 = 0;
+	uint32_t t1 = 0;
+	uint32_t t2 = 0;
 	uint32_t a = h0;
 	uint32_t b = h1;
 	uint32_t c = h2;
@@ -60,26 +55,23 @@ void sha256_constant_loop(t_sha256 *sha256, unsigned char *input_padded)
 
 	while (i < 64)
 	{
-		s0_r = s0(ssig0(w[i - 15]));
-		s1_r = s1(ssig1(w[i - 2]));
-		w[i] = w[i - 16] + s0_r + w[i - 7] + s1_r;
+		w[i] = ssig1(w[i - 2]) + w[i - 7] + ssig0(w[i - 15]) + w[i - 16];
 		i++;
 	}
 	i = 0;
 	while (i < 64)
 	{
-		S1_r = S1(bsig0(e));
-		tmp = h + S1_r + ch(e, f, g) + K[i] + w[i];
-		S0_r = S0(bsig1(a));
-		tmp2 = S0_r + maj(a, b, c);
+		t1 = h + bsig1(e) + ch(e, f, g) + K[i] + w[i];
+		t2 = bsig0(a) + maj(a, b, c);
+
 		h = g;
 		g = f;
 		f = e;
-		e = d + tmp;
+		e = d + t1;
 		d = c;
 		c = b;
 		b = a;
-		a = tmp + tmp2;
+		a = t1 + t2;
 		i++;
 	}
 	h0 += a;
@@ -118,7 +110,7 @@ void sha256_processing(t_sha256 *sha256, t_ssl *ssl)
 	buf = new;
     while (i < sha256->pad_size)
     {		
-        sha256_constant_loop(sha256, buf);
+        sha256_constant_loop(buf);
         buf += 64;
         i += 64;
     }
@@ -126,14 +118,15 @@ void sha256_processing(t_sha256 *sha256, t_ssl *ssl)
 	char *hash = malloc(sizeof(char) * 66);
 	if (!hash)
 		handle_errors(MALLOC_FAILED, NULL, -1, ssl);
-	for (int i = 0; i < 4; i++)
-	// 	sprintf(hash + i * 2, "%02x", ((uint8_t *)&a0)[i]);
-	// for (int i = 0; i < 4; i++)
-	// 	sprintf(hash + 8 + i * 2, "%02x", ((uint8_t *)&b0)[i]);
-	// for (int i = 0; i < 4; i++)
-	// 	sprintf(hash + 16 + i * 2, "%02x", ((uint8_t *)&c0)[i]);
-	// for (int i = 0; i < 4; i++)
-	// 	sprintf(hash + 24 + i * 2, "%02x", ((uint8_t *)&d0)[i]);
+	// for (int i = 0; i < 8; i++)
+	sprintf(hash + 8 * 0, "%08x", h0);
+	sprintf(hash + 8 * 1, "%08x", h1);
+	sprintf(hash + 8 * 2, "%08x", h2);
+	sprintf(hash + 8 * 3, "%08x", h3);
+	sprintf(hash + 8 * 4, "%08x", h4);
+	sprintf(hash + 8 * 5, "%08x", h5);
+	sprintf(hash + 8 * 6, "%08x", h6);
+	sprintf(hash + 8 * 7, "%08x", h7);
 	hash[65] = '\0';
 	ft_bzero(ssl->output, ft_strlen(ssl->output));
 	ssl->output = ft_strdup(hash);
