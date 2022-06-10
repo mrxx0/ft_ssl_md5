@@ -30,6 +30,12 @@ static uint32_t K[64] = {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
 	0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 
+/*
+   Here we are going to apply functions on the buffers.
+   The function applied depends on the constant i (from 0 to 64) and values [a-h].
+   */
+
+
 void sha256_constant_loop(unsigned char *input_padded)
 {
 	uint32_t i = 0;
@@ -85,6 +91,22 @@ void sha256_constant_loop(unsigned char *input_padded)
 }
 
 /*
+	Reset value for global variable in case of multiple arguments.
+*/
+
+void reset_H()
+{
+	h0 = 0x6a09e667;
+	h1 = 0xbb67ae85;
+	h2 = 0x3c6ef372;
+	h3 = 0xa54ff53a;
+	h4 = 0x510e527f;
+	h5 = 0x9b05688c;
+	h6 = 0x1f83d9ab;
+	h7 = 0x5be0cd19;
+}
+
+/*
    This is where the SHA256 is created.
    */
 
@@ -108,6 +130,7 @@ void sha256_processing(t_sha256 *sha256, t_ssl *ssl)
 	for (uint64_t i = 0; i < 8; i++) 
 		new[sha256->pad_size - (i + 1)] = bit_length >> 8 * i;
 	buf = new;
+	reset_H();
     while (i < sha256->pad_size)
     {		
         sha256_constant_loop(buf);
