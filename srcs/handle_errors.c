@@ -19,6 +19,7 @@ int handle_errors(int error_id, char *error, int cmd, t_ssl *ssl)
         "\nCommands:"
         "\n\tmd5"
         "\n\tsha256"
+        "\n\tsha384"
         "\nFlags:"
         "\n\t-p -q -r -s\n", error);
         exit(EXIT_FAILURE);
@@ -29,6 +30,7 @@ int handle_errors(int error_id, char *error, int cmd, t_ssl *ssl)
         "\nCommands:"
         "\n\tmd5"
         "\n\tsha256"
+        "\n\tsha384"
         "\nFlags:"
         "\n\t-p -q -r -s\n", error);
         exit(EXIT_FAILURE);

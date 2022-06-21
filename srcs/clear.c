@@ -1,6 +1,19 @@
 #include "../includes/ft_ssl.h"
 
 /*
+    Clear sha384 structure.
+*/
+
+void    clear_sha384(t_sha384 *sha384)
+{
+    sha384->dft_size = 0;
+    sha384->pad_size = 0;
+    if (sha384)
+        free(sha384);
+}
+
+
+/*
     Clear sha256 structure.
 */
 

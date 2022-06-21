@@ -10,4 +10,6 @@ void execute(t_ssl *ssl)
         md5(ssl);
     else if (ssl->cmd == SHA256)
         sha256(ssl);
+    else if (ssl->cmd == SHA384)
+        sha384(ssl);
 }
