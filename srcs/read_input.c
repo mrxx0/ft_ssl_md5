@@ -113,7 +113,7 @@ void         read_input_file(t_ssl *ssl, char *input)
    Dispatch reading method from stdin or string/file
    */
 
-bool read_input(char **argv, int *argc, t_ssl *ssl)
+void read_input(char **argv, int *argc, t_ssl *ssl)
 {
 	int i = ssl->offset;
 
@@ -151,5 +151,4 @@ bool read_input(char **argv, int *argc, t_ssl *ssl)
 		i++;
 	}
 	clear_ssl(ssl, 1);
-	return (TRUE);
 }

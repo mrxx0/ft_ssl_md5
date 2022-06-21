@@ -76,7 +76,7 @@ bool 			parsing(char **argv, t_ssl *ssl);
 int 			handle_errors(int error_id, char *error, int cmd, t_ssl *ssl);
 t_ssl 			*init_new_ssl(void);
 void    		clear_ssl(t_ssl *ssl, bool flag);
-bool 			read_input(char **argv, int *argc, t_ssl *ssl);
+void 			read_input(char **argv, int *argc, t_ssl *ssl);
 void 			execute(t_ssl *ssl);
 void 			md5 (t_ssl *ssl);
 t_md5   		*init_new_md5(size_t input_size);
