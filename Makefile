@@ -12,7 +12,8 @@ CFLAGS += -Wpadded
 
 FT_SSL_FILES 	= 	main parsing lib handle_errors init read_input execute md5 \
 					clear md5_processing  print_hash sha256 sha256_processing	\
-					sha256_binary_operation sha384 sha384_processing
+					sha256_binary_operation sha384 sha384_processing sha512 	\
+					sha512_processing
 
 INC_FILES 	= ft_ssl.h
 
