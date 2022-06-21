@@ -13,5 +13,5 @@ void execute(t_ssl *ssl)
     else if (ssl->cmd == SHA384)
         sha384(ssl);
     else if (ssl->cmd == SHA512)
-        sha384(ssl);
+        sha512(ssl);
 }
