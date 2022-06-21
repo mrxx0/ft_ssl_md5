@@ -2,14 +2,14 @@
 
 /*		CONSTANT SHA512		*/
 
-static uint64_t h0 = 0x6a09e667;
-static uint64_t h1 = 0xbb67ae85;
-static uint64_t h2 = 0x3c6ef372;
-static uint64_t h3 = 0xa54ff53a;
-static uint64_t h4 = 0x510e527f;
-static uint64_t h5 = 0x9b05688c;
-static uint64_t h6 = 0x1f83d9ab;
-static uint64_t h7 = 0x5be0cd19;
+static uint64_t h0 = 0x6a09e667f3bcc908;
+static uint64_t h1 = 0xbb67ae8584caa73b;
+static uint64_t h2 = 0x3c6ef372fe94f82b;
+static uint64_t h3 = 0xa54ff53a5f1d36f1;
+static uint64_t h4 = 0x510e527fade682d1;
+static uint64_t h5 = 0x9b05688c2b3e6c1f;
+static uint64_t h6 = 0x1f83d9abfb41bd6b;
+static uint64_t h7 = 0x5be0cd19137e2179;
 
 static uint64_t K[80] = {0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc,
     0x3956c25bf348b538, 0x59f111f1b605d019, 0x923f82a4af194f9b, 0xab1c5ed5da6d8118,
