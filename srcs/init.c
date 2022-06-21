@@ -2,6 +2,30 @@
 #include <sys/types.h>
 
 /*
+    Init sha512 structure.
+*/
+
+t_sha512   *init_new_sha512(size_t input_size)
+{
+    t_sha512 *sha512;
+
+    sha512 = NULL;
+    if (!(sha512 = (t_sha512 *)ft_memalloc(sizeof(t_sha512))))
+        handle_errors(MALLOC_FAILED, NULL, -1, NULL);
+    sha512->dft_size = input_size;
+    if (sha512->dft_size % 64 == 56)
+        sha512->pad_size = 72 + sha512->dft_size;
+    else
+    {
+        if (sha512->dft_size % 64 < 56)
+            sha512->pad_size = 64 - sha512->dft_size % 64 + sha512->dft_size;
+        else
+            sha512->pad_size = 128 - sha512->dft_size % 64 + sha512->dft_size;
+    }
+    return (sha512);
+}
+
+/*
     Init sha384 structure.
 */
 

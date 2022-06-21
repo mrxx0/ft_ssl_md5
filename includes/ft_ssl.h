@@ -38,6 +38,7 @@
 # define MD5    0
 # define SHA256 1
 # define SHA384 2
+# define SHA512 3
 
 /*      STRUCTURE       */
 
@@ -78,6 +79,13 @@ typedef struct				s_sha384
 
 }							t_sha384;
 
+typedef struct				s_sha512
+{
+	size_t					dft_size;
+	size_t					pad_size;
+
+}							t_sha512;
+
 /*      PROTOTYPE       */
 
 bool 			parsing(char **argv, t_ssl *ssl);
@@ -103,6 +111,10 @@ void			sha384(t_ssl *ssl);
 t_sha384   		*init_new_sha384(size_t input_size);
 void 			sha384_processing(t_sha384 *sha384, t_ssl *ssl);
 void   			clear_sha384(t_sha384 *sha384);
+void			sha512(t_ssl *ssl);
+t_sha512   		*init_new_sha512(size_t input_size);
+void 			sha512_processing(t_sha512 *sha512, t_ssl *ssl);
+void   			clear_sha512(t_sha512 *sha512);
 
 /*		SHA256 BINARY OPERATIONS	*/
 

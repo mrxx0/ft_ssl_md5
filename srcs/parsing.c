@@ -23,6 +23,11 @@ bool parse_command(char **argv, t_ssl *ssl)
         ssl->cmd = SHA384;
         return (TRUE);
     }
+    else if (ft_strcmp(argv[1], "sha512") == 0)
+    {
+        ssl->cmd = SHA512;
+        return (TRUE);
+    }
     ssl->cmd = 0;
     handle_errors(COMMAND_ERR, argv[1], -1, ssl);
     return (FALSE);

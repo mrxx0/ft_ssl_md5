@@ -1,6 +1,18 @@
 #include "../includes/ft_ssl.h"
 
 /*
+    Clear sha512 structure.
+*/
+
+void    clear_sha512(t_sha512 *sha512)
+{
+    sha512->dft_size = 0;
+    sha512->pad_size = 0;
+    if (sha512)
+        free(sha512);
+}
+
+/*
     Clear sha384 structure.
 */
 
