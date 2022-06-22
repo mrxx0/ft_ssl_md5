@@ -2,16 +2,16 @@
 
 /*		CONSTANT SHA512		*/
 
-static uint64_t h0 = 0x6a09e667f3bcc908;
-static uint64_t h1 = 0xbb67ae8584caa73b;
-static uint64_t h2 = 0x3c6ef372fe94f82b;
-static uint64_t h3 = 0xa54ff53a5f1d36f1;
-static uint64_t h4 = 0x510e527fade682d1;
-static uint64_t h5 = 0x9b05688c2b3e6c1f;
-static uint64_t h6 = 0x1f83d9abfb41bd6b;
-static uint64_t h7 = 0x5be0cd19137e2179;
+ uint64_t h0 = 0x6a09e667f3bcc908;
+ uint64_t h1 = 0xbb67ae8584caa73b;
+ uint64_t h2 = 0x3c6ef372fe94f82b;
+ uint64_t h3 = 0xa54ff53a5f1d36f1;
+ uint64_t h4 = 0x510e527fade682d1;
+ uint64_t h5 = 0x9b05688c2b3e6c1f;
+ uint64_t h6 = 0x1f83d9abfb41bd6b;
+ uint64_t h7 = 0x5be0cd19137e2179;
 
-static uint64_t K[80] = {0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc,
+ uint64_t K[80] = {0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc,
     0x3956c25bf348b538, 0x59f111f1b605d019, 0x923f82a4af194f9b, 0xab1c5ed5da6d8118,
     0xd807aa98a3030242, 0x12835b0145706fbe, 0x243185be4ee4b28c, 0x550c7dc3d5ffb4e2,
     0x72be5d74f27b896f, 0x80deb1fe3b1696b1, 0x9bdc06a725c71235, 0xc19bf174cf692694,
@@ -33,11 +33,141 @@ static uint64_t K[80] = {0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3
     0x4cc5d4becb3e42b6, 0x597f299cfc657e2a, 0x5fcb6fab3ad6faec, 0x6c44198c4a475817};
 
 /*
+   Here we are going to apply functions on the buffers.
+   The function applied depends on the constant i (from 0 to 80) and values [a-h].
+   */
+
+
+void sha512_constant_loop(unsigned char *input_padded)
+{
+	uint64_t i = 0;
+	uint64_t j = 0;
+    uint64_t w[80];
+	uint64_t t1 = 0;
+	uint64_t t2 = 0;
+	uint64_t a = h0;
+	uint64_t b = h1;
+	uint64_t c = h2;
+	uint64_t d = h3;
+	uint64_t e = h4;
+	uint64_t f = h5;
+	uint64_t g = h6;
+	uint64_t h = h7;
+
+    while (i < 16)
+    {
+        w[i] = (uint64_t) input_padded[0 + j] << 56 | (uint64_t) input_padded[1 + j] << 48 | (uint64_t) input_padded[2 + j] << 40 | (uint64_t) input_padded[4 + j] << 24 | (uint64_t) input_padded[5 + j] << 16 | (uint64_t) input_padded[6 + j] << 8 | (uint64_t) input_padded[7 + j];
+        i++;
+        j += 8;
+	}
+
+	while (i < 80)
+	{
+		w[i] = ssig1(w[i - 2]) + w[i - 7] + ssig0(w[i - 15]) + w[i - 16];
+		i++;
+	}
+	i = 0;
+	while (i < 80)
+	{
+		t1 = h + bsig1(e) + ch(e, f, g) + K[i] + w[i];
+		t2 = bsig0(a) + maj(a, b, c);
+
+		h = g;
+		g = f;
+		f = e;
+		e = d + t1;
+		d = c;
+		c = b;
+		b = a;
+		a = t1 + t2;
+		i++;
+	}
+	h0 += a;
+	h1 += b;
+	h2 += c;
+	h3 += d;
+	h4 += e;
+	h5 += f;
+	h6 += g;
+	h7 += h;
+}
+
+/*
+	Reset value for global variable in case of multiple arguments.
+*/
+
+void reset_H_512()
+{
+    h0 = 0x6a09e667f3bcc908;
+    h1 = 0xbb67ae8584caa73b;
+    h2 = 0x3c6ef372fe94f82b;
+    h3 = 0xa54ff53a5f1d36f1;
+    h4 = 0x510e527fade682d1;
+    h5 = 0x9b05688c2b3e6c1f;
+    h6 = 0x1f83d9abfb41bd6b;
+    h7 = 0x5be0cd19137e2179;
+}
+
+/*
    This is where the SHA512 is created.
    */
 
 void sha512_processing(t_sha512 *sha512, t_ssl *ssl)
 {
-    (void)sha512;
-    (void)ssl;
+    uint64_t            i = 0;
+	size_t              pad_zero = 0;
+	unsigned char		*new;
+	unsigned char 		*buf;
+
+	if (!(new = (unsigned char *)malloc(sizeof(char) * sha512->pad_size)))
+		handle_errors(MALLOC_FAILED, NULL, -1, ssl);
+	new = ft_memcpy((void *)new, (void *)ssl->input, sha512->dft_size);
+    printf("input = %s\n", ssl->input);    
+    printf("dft_size = %ld\n", sha512->dft_size);
+    printf("pad_size = %ld\n", sha512->pad_size);
+    printf("%p\n", new);
+    if (sha512->dft_size % 128 > 111)
+		pad_zero = 128 - ((sha512->dft_size % 128) + 1) + 112;
+	else
+		pad_zero = 128 - ((sha512->dft_size % 128) + 1) - 16;
+	new[sha512->dft_size] = (unsigned char)0b10000000;
+	ft_memset(new + sha512->dft_size + 1, 0, pad_zero);
+    	uint64_t	bit_length = sha512->dft_size * 8;
+	for (uint64_t i = 0; i < 16; i++) 
+		new[sha512->pad_size - (i + 1)] = bit_length >> 8 * i;
+	buf = new;
+	reset_H_512();
+    while (i < sha512->pad_size)
+    {		
+        sha512_constant_loop(buf);
+        buf += 128;
+        i += 128;
+    }
+    free(new);
+
+    /**********************/
+
+    char *hash = malloc(sizeof(char) * 129);
+	if (!hash)
+		handle_errors(MALLOC_FAILED, NULL, -1, ssl);
+	for (int i = 0; i < 8; i++)
+		sprintf(hash + 16 * i, "%016lx", h0);
+    for (int i = 0; i < 8; i++)
+		sprintf(hash + 16 * i, "%016lx", h1);
+    for (int i = 0; i < 8; i++)
+		sprintf(hash + 16 * i, "%016lx", h2);
+    for (int i = 0; i < 8; i++)
+		sprintf(hash + 16 * i, "%016lx", h3);
+    for (int i = 0; i < 8; i++)
+		sprintf(hash + 16 * i, "%016lx", h4);
+    for (int i = 0; i < 8; i++)
+		sprintf(hash + 16 * i, "%016lx", h5);
+    for (int i = 0; i < 8; i++)
+		sprintf(hash + 16 * i, "%016lx", h6);
+    for (int i = 0; i < 8; i++)
+		sprintf(hash + 16 * i, "%016lx", h7);
+	hash[128] = '\0';
+	ft_bzero(ssl->output, ft_strlen(ssl->output));
+	ssl->output = ft_strdup(hash);
+	free(hash);
 }
