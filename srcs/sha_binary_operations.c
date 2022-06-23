@@ -6,22 +6,22 @@
 
 uint64_t    s1(uint64_t x)
 {
-    return (rightrotate(x, 19) ^ rightrotate(x, 61) ^ rightrotate(x, 6));
+    return (rightrotate512(x, 19) ^ rightrotate512(x, 61) ^ rightrotate512(x, 6));
 }
 
 uint64_t    s0(uint64_t x)
 {
-    return (rightrotate(x, 1) ^ rightrotate(x, 8) ^ rightrotate(x, 7));
+    return (rightrotate512(x, 1) ^ rightrotate512(x, 8) ^ rightrotate512(x, 7));
 }
 
 uint64_t    S1(uint64_t x)
 {
-    return (rightrotate(x, 14) ^ rightrotate(x, 18) ^ rightrotate(x, 41));
+    return (rightrotate512(x, 14) ^ rightrotate512(x, 18) ^ rightrotate512(x, 41));
 }
 
 uint64_t    S0(uint64_t x)
 {
-    return (rightrotate(x, 28) ^ rightrotate(x, 34) ^ rightrotate(x, 39));
+    return (rightrotate512(x, 28) ^ rightrotate512(x, 34) ^ rightrotate512(x, 39));
 }
 
 uint64_t    bsig1(uint64_t x)
@@ -62,4 +62,9 @@ uint64_t    rightshift(uint64_t x, uint64_t y)
 uint64_t	rightrotate(uint64_t x, uint64_t y)
 {
 	return ((x >> y) | (x << (32 - y)));
+}
+
+uint64_t	rightrotate512(uint64_t x, uint64_t y)
+{
+	return ((x >> y) | (x << (64 - y)));
 }

@@ -118,6 +118,7 @@ void   			clear_sha512(t_sha512 *sha512);
 
 /*		SHA BINARY OPERATIONS	*/
 
+uint64_t	rightrotate512(uint64_t x, uint64_t y);
 uint64_t	rightrotate(uint64_t x, uint64_t y);
 uint64_t    rightshift(uint64_t x, uint64_t y);
 uint64_t    ch(uint64_t x, uint64_t y, uint64_t z);
