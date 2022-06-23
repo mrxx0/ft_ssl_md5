@@ -63,14 +63,14 @@ void sha512_constant_loop(unsigned char *input_padded)
 
 	while (i < 80)
 	{
-		w[i] = ssig1(w[i - 2]) + w[i - 7] + ssig0(w[i - 15]) + w[i - 16];
+		w[i] = s1(w[i - 2]) + w[i - 7] + s0(w[i - 15]) + w[i - 16];
 		i++;
 	}
 	i = 0;
 	while (i < 80)
 	{
-		t1 = h + bsig1(e) + ch(e, f, g) + K[i] + w[i];
-		t2 = bsig0(a) + maj(a, b, c);
+		t1 = h + S1(e) + ch(e, f, g) + K[i] + w[i];
+		t2 = S0(a) + maj(a, b, c);
 
 		h = g;
 		g = f;
@@ -128,7 +128,7 @@ void sha512_processing(t_sha512 *sha512, t_ssl *ssl)
 		pad_zero = 128 - ((sha512->dft_size % 128) + 1) - 16;
 	new[sha512->dft_size] = (unsigned char)0b10000000;
 	ft_memset(new + sha512->dft_size + 1, 0, pad_zero);
-    	uint64_t	bit_length = sha512->dft_size * 8;
+    __uint128_t	bit_length = sha512->dft_size * 8;
 	for (uint64_t i = 0; i < 16; i++) 
 		new[sha512->pad_size - (i + 1)] = bit_length >> 8 * i;
 	buf = new;
@@ -143,22 +143,14 @@ void sha512_processing(t_sha512 *sha512, t_ssl *ssl)
     char *hash = malloc(sizeof(char) * 129);
 	if (!hash)
 		handle_errors(MALLOC_FAILED, NULL, -1, ssl);
-	for (int i = 0; i < 8; i++)
-		sprintf(hash + 16 * i, "%016lx", h0);
-    for (int i = 0; i < 8; i++)
-		sprintf(hash + 16 * i, "%016lx", h1);
-    for (int i = 0; i < 8; i++)
-		sprintf(hash + 16 * i, "%016lx", h2);
-    for (int i = 0; i < 8; i++)
-		sprintf(hash + 16 * i, "%016lx", h3);
-    for (int i = 0; i < 8; i++)
-		sprintf(hash + 16 * i, "%016lx", h4);
-    for (int i = 0; i < 8; i++)
-		sprintf(hash + 16 * i, "%016lx", h5);
-    for (int i = 0; i < 8; i++)
-		sprintf(hash + 16 * i, "%016lx", h6);
-    for (int i = 0; i < 8; i++)
-		sprintf(hash + 16 * i, "%016lx", h7);
+	sprintf(hash + 16 * 0, "%016lx", h0);
+	sprintf(hash + 16 * 1, "%016lx", h1);
+	sprintf(hash + 16 * 2, "%016lx", h2);
+	sprintf(hash + 16 * 3, "%016lx", h3);
+	sprintf(hash + 16 * 4, "%016lx", h4);
+	sprintf(hash + 16 * 5, "%016lx", h5);
+	sprintf(hash + 16 * 6, "%016lx", h6);
+	sprintf(hash + 16 * 7, "%016lx", h7);
 	hash[128] = '\0';
 	ft_bzero(ssl->output, ft_strlen(ssl->output));
 	ssl->output = ft_strdup(hash);
