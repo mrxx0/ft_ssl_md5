@@ -122,10 +122,6 @@ void sha512_processing(t_sha512 *sha512, t_ssl *ssl)
 	if (!(new = (unsigned char *)malloc(sizeof(char) * sha512->pad_size)))
 		handle_errors(MALLOC_FAILED, NULL, -1, ssl);
 	new = ft_memcpy((void *)new, (void *)ssl->input, sha512->dft_size);
-    printf("input = %s\n", ssl->input);    
-    printf("dft_size = %ld\n", sha512->dft_size);
-    printf("pad_size = %ld\n", sha512->pad_size);
-    printf("%p\n", new);
     if (sha512->dft_size % 128 > 111)
 		pad_zero = 128 - ((sha512->dft_size % 128) + 1) + 112;
 	else
@@ -144,9 +140,6 @@ void sha512_processing(t_sha512 *sha512, t_ssl *ssl)
         i += 128;
     }
     free(new);
-
-    /**********************/
-
     char *hash = malloc(sizeof(char) * 129);
 	if (!hash)
 		handle_errors(MALLOC_FAILED, NULL, -1, ssl);
