@@ -16,6 +16,8 @@ void print_file(char *hash, char *arg, int flag, int cmd)
             printf("MD5 (%s) = %s\n", arg, hash);
         else if (cmd == SHA256)
             printf("SHA256 (%s) = %s\n", arg, hash);
+        else if (cmd == SHA512)
+            printf("SHA512 (%s) = %s\n", arg, hash);
     }
 }
 
@@ -31,6 +33,8 @@ void print_string(char *hash, char *arg, int flag, int cmd)
             printf("MD5 (\"%s\") = %s\n", arg, hash);
         else if (cmd == SHA256)
             printf("SHA256 (\"%s\") = %s\n", arg, hash);
+        else if (cmd == SHA512)
+            printf("SHA512 (\"%s\") = %s\n", arg, hash);
     }
 }
 
