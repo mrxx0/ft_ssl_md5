@@ -37,14 +37,14 @@ t_sha384   *init_new_sha384(size_t input_size)
     if (!(sha384 = (t_sha384 *)ft_memalloc(sizeof(t_sha384))))
         handle_errors(MALLOC_FAILED, NULL, -1, NULL);
     sha384->dft_size = input_size;
-    if (sha384->dft_size % 64 == 56)
-        sha384->pad_size = 72 + sha384->dft_size;
+    if (sha384->dft_size % 128 == 112)
+        sha384->pad_size = 144 + sha384->dft_size;
     else
     {
-        if (sha384->dft_size % 64 < 56)
-            sha384->pad_size = 64 - sha384->dft_size % 64 + sha384->dft_size;
+        if (sha384->dft_size % 128 < 112)
+            sha384->pad_size = 128 - sha384->dft_size % 128 + sha384->dft_size;
         else
-            sha384->pad_size = 128 - sha384->dft_size % 64 + sha384->dft_size;
+            sha384->pad_size = 256 - sha384->dft_size % 128 + sha384->dft_size;
     }
     return (sha384);
 }
