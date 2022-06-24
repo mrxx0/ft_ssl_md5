@@ -149,8 +149,6 @@ void sha384_processing(t_sha384 *sha384, t_ssl *ssl)
 	sprintf(hash + 16 * 3, "%016lx", h3);
 	sprintf(hash + 16 * 4, "%016lx", h4);
 	sprintf(hash + 16 * 5, "%016lx", h5);
-	// sprintf(hash + 16 * 6, "%016lx", h6);
-	// sprintf(hash + 16 * 7, "%016lx", h7);
 	hash[96] = '\0';
 	ft_bzero(ssl->output, ft_strlen(ssl->output));
 	ssl->output = ft_strdup(hash);
