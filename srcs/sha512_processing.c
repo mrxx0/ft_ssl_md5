@@ -56,11 +56,10 @@ void sha512_constant_loop(unsigned char *input_padded)
 
     while (i < 16)
     {
-        w[i] = (uint64_t) input_padded[0 + j] << 56 | (uint64_t) input_padded[1 + j] << 48 | (uint64_t) input_padded[2 + j] << 40 | (uint64_t) input_padded[4 + j] << 24 | (uint64_t) input_padded[5 + j] << 16 | (uint64_t) input_padded[6 + j] << 8 | (uint64_t) input_padded[7 + j];
-        i++;
+        w[i] = (uint64_t) input_padded[0 + j] << 56 | (uint64_t) input_padded[1 + j] << 48 | (uint64_t) input_padded[2 + j] << 40 | (uint64_t) input_padded[3 + j] << 32 | (uint64_t) input_padded[4 + j] << 24 | (uint64_t) input_padded[5 + j] << 16 | (uint64_t) input_padded[6 + j] << 8 | (uint64_t) input_padded[7 + j];
+		i++;
         j += 8;
 	}
-
 	while (i < 80)
 	{
 		w[i] = s1(w[i - 2]) + w[i - 7] + s0(w[i - 15]) + w[i - 16];
@@ -139,7 +138,7 @@ void sha512_processing(t_sha512 *sha512, t_ssl *ssl)
         buf += 128;
         i += 128;
     }
-    free(new);
+	free(new);
     char *hash = malloc(sizeof(char) * 129);
 	if (!hash)
 		handle_errors(MALLOC_FAILED, NULL, -1, ssl);

@@ -6,12 +6,12 @@
 
 uint64_t    s1(uint64_t x)
 {
-    return (rightrotate512(x, 19) ^ rightrotate512(x, 61) ^ rightrotate512(x, 6));
+    return (rightrotate512(x, 19) ^ rightrotate512(x, 61) ^ rightshift(x, 6));
 }
 
 uint64_t    s0(uint64_t x)
 {
-    return (rightrotate512(x, 1) ^ rightrotate512(x, 8) ^ rightrotate512(x, 7));
+    return (rightrotate512(x, 1) ^ rightrotate512(x, 8) ^ rightshift(x, 7));
 }
 
 uint64_t    S1(uint64_t x)
