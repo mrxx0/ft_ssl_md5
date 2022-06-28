@@ -36,7 +36,7 @@ static uint32_t K[64] = {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
    */
 
 
-void sha256_constant_loop(unsigned char *input_padded)
+static void sha256_constant_loop(unsigned char *input_padded)
 {
 	uint32_t i = 0;
 	uint32_t j = 0;
@@ -94,7 +94,7 @@ void sha256_constant_loop(unsigned char *input_padded)
 	Reset value for global variable in case of multiple arguments.
 */
 
-void reset_H()
+static void reset_H()
 {
 	h0 = 0x6a09e667;
 	h1 = 0xbb67ae85;

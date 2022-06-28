@@ -51,7 +51,7 @@ static uint32_t K[64] = {0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
    }
    */
 
-void md5_update_abcd(t_md5 *md5)
+static void md5_update_abcd(t_md5 *md5)
 {
 	a0 += md5->A;
 	b0 += md5->B;
@@ -64,7 +64,7 @@ void md5_update_abcd(t_md5 *md5)
    The function applied depends on the constant i (from 0 to 64).
    */
 
-void md5_constant_loop(t_md5 *md5, unsigned char *input_padded)
+static  void md5_constant_loop(t_md5 *md5, unsigned char *input_padded)
 {
 	uint32_t i = 0;
 	uint32_t *M = (void *)input_padded;
@@ -111,7 +111,7 @@ void md5_constant_loop(t_md5 *md5, unsigned char *input_padded)
 	Reset value for global variable in case of multiple arguments.
 */
 
-void reset_ABCD()
+static void reset_ABCD()
 {
 	a0 = word_A;
 	b0 = word_B;

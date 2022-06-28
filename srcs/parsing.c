@@ -6,7 +6,7 @@
     returns true.
 */
 
-bool parse_command(char **argv, t_ssl *ssl)
+static bool parse_command(char **argv, t_ssl *ssl)
 {
     if (ft_strcmp(argv[1], "md5") == 0)
     {
@@ -40,7 +40,7 @@ bool parse_command(char **argv, t_ssl *ssl)
     -s, print the sum of the given string
 */
 
-bool check_flag(char c)
+static bool check_flag(char c)
 {
     if (c != 'p'
     && c != 'q'
@@ -51,7 +51,7 @@ bool check_flag(char c)
         return (TRUE);
 }
 
-bool stock_flag(char c, t_ssl *ssl)
+static bool stock_flag(char c, t_ssl *ssl)
 {
     if (c == 'p')
     {
@@ -90,7 +90,7 @@ bool stock_flag(char c, t_ssl *ssl)
     If -X OK but if wrong flag -> error
 */
 
-bool parse_flags(char **argv, t_ssl	*ssl)
+static bool parse_flags(char **argv, t_ssl	*ssl)
 {
     int i = 2;
     while (argv[i] && argv[i][0] == '-')

@@ -47,7 +47,7 @@ void         read_input_stdin(t_ssl *ssl)
    Returns the fd index to open the input.
    */
 
-int open_input(char *input, int cmd, t_ssl *ssl)
+static int open_input(char *input, int cmd, t_ssl *ssl)
 {
 	int fd;
 	struct stat buf;
@@ -63,7 +63,7 @@ int open_input(char *input, int cmd, t_ssl *ssl)
    Returns the size / 10 of the file opened.
    */
 
-uint64_t get_input_size(int fd)
+static uint64_t get_input_size(int fd)
 {
 	struct stat	buf;
 

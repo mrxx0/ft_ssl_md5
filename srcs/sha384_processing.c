@@ -38,7 +38,7 @@ static uint64_t K[80] = {0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3
    */
 
 
-void sha384_constant_loop(unsigned char *input_padded)
+static void sha384_constant_loop(unsigned char *input_padded)
 {
 	uint64_t i = 0;
 	uint64_t j = 0;
@@ -95,7 +95,7 @@ void sha384_constant_loop(unsigned char *input_padded)
 	Reset value for global variable in case of multiple arguments.
 */
 
-void reset_H_384()
+static void reset_H_384()
 {
     h0 = 0xcbbb9d5dc1059ed8;
     h1 = 0x629a292a367cd507;
