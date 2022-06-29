@@ -11,6 +11,10 @@ int handle_errors(int error_id, char *error, int cmd, t_ssl *ssl)
         cmd_str = "md5";
     else if (cmd == SHA256)
         cmd_str = "sha256";
+    else if (cmd == SHA384)
+        cmd_str = "sha384";
+    else if (cmd == SHA512)
+        cmd_str = "sha512";
     else
         cmd_str = NULL;
     if (error_id == COMMAND_ERR)
