@@ -19,9 +19,9 @@
 Compilation:
 
 - make:	Compilation and creation of ft_ssl binary
-- clean:	Delete only object files from library and lem-in
-- fclean:	Delete all object files and binay from lem-in and libft
-- re:		Recompile lem-in project
+- clean:	Delete only object files from library and ft_ssl
+- fclean:	Delete all object files and binay from ft_ssl and libft
+- re:		Recompile ft_ssl project
 
 ```
 
